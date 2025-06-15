@@ -1,0 +1,132 @@
+/* ============ POST ACTIONS ============ */
+.post-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #f0f2f5;
+  }
+  
+  .post-action {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #657786;
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+  
+  .post-action:hover {
+    background-color: #f5f8fa;
+    color: #3a86ff;
+  }
+  
+  .action-icon {
+    font-size: 1.1rem;
+  }
+  
+  .action-count {
+    font-size: 0.85rem;
+  }
+  
+  /* Vote animation */
+  @keyframes bump {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  
+  .post-action:active .action-icon {
+    animation: bump 0.3s ease;
+  }
+
+  /* ============ UPDATED POST HEADER STYLES ============ */
+.post-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  
+  .post-profile-photo {
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  
+  .post-user-info-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: baseline;
+  }
+  
+  .post-user-info {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  
+  .post-username {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  
+  .post-handle {
+    color: #657786;
+    font-size: 0.85rem;
+  }
+  
+  .post-date {
+    color: #657786;
+    font-size: 0.85rem;
+    margin-left: auto;
+    padding-left: 10px;
+  }
+  
+  /* Align profile photos in form and posts */
+  .input-row .profile-wrapper,
+  .post-item .profile-wrapper {
+    width: 50px;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Profile Photo Alignment */
+.form-profile-wrapper,
+.post-profile-wrapper {
+  width: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 2px;
+}
+
+/* Post Header Layout */
+.post-header {
+  display: flex;
+  margin-bottom: 12px;
+}
+
+.post-user-info-container {
+  display: flex;
+  justify-content: space-between;
+  width: calc(100% - 62px);
+  align-items: baseline;
+}
+
+.post-user-info {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.post-date {
+  color: #657786;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}

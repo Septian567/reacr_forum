@@ -1,0 +1,19 @@
+17 Mei 2025
+
+TODO
+1. pisahkan MainPage.jsx menjadi beberapa komponen  --- SUCCESS
+2. menyimpan postingan ke local storage  --- SUCCESS
+3. membuat fitur detailPage.jsx  --- SUCCESS
+
+
+TODO NEXT
+1. membuat fitur waktu  -- SUCCESS
+2. membuat fitur post komentar -- SUCCESS
+3. menampilkan komentar -- SUCCESS
+
+TODO 12 Juni 2025
+1. merapikan tampilan detail page  -- SUCCESS
+2. memperbaiki link ke detail page  -- SUCCESS
+3. memasukkan kategori ke menu kategori
+
+

@@ -2,18 +2,23 @@ import React from "react";
 import "../styles/columns.css";
 import PostForm from "../components/PostForm";
 import PostList from "../components/PostList";
-import useMainPage from "../hooks/useMainPage"; // pastikan path benar
+import { usePostContext } from "../contexts/PostContext";
 
 const MainPage = () => {
-  const { posts, handlePost, handleVote, handleDeleteAll } = useMainPage();
+  const { posts, addPost, votePost, deleteAllPosts, selectedCategory } =
+    usePostContext();
+
+  const filteredPosts = selectedCategory
+    ? posts.filter((post) => post.category === selectedCategory)
+    : posts;
 
   return (
     <div className="column center main-grid">
-      <PostForm onPost={handlePost} />
+      <PostForm onPost={addPost} />
 
       <div style={{ marginBottom: "15px", textAlign: "right" }}>
         <button
-          onClick={handleDeleteAll}
+          onClick={deleteAllPosts}
           style={{
             backgroundColor: "#ff4d4f",
             border: "none",
@@ -27,7 +32,13 @@ const MainPage = () => {
         </button>
       </div>
 
-      <PostList posts={posts} onVote={handleVote} />
+      {selectedCategory && (
+        <div style={{ marginBottom: "10px" }}>
+          <strong>kategori:</strong> #{selectedCategory}
+        </div>
+      )}
+
+      <PostList posts={filteredPosts} onVote={votePost} />
     </div>
   );
 };

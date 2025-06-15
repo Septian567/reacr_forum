@@ -14,6 +14,11 @@ TODO NEXT
 TODO 12 Juni 2025
 1. merapikan tampilan detail page  -- SUCCESS
 2. memperbaiki link ke detail page  -- SUCCESS
-3. memasukkan kategori ke menu kategori
+3. memasukkan kategori ke menu kategori  -- SUCCESS
+4. membuat Leaderboard
+5. membuat halaman register dan login
+6. membuat modal untuk tombol post
+7. menghubungkan ke api
+8. refactoring ke redux
 
 

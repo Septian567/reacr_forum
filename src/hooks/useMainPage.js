@@ -26,19 +26,19 @@ const useMainPage = () => {
     return new Date().toISOString();
   };
 
-  const handlePost = (category, content) => {
-    const newPost = {
+  const handlePost = (newPost) => {
+    const postWithDefaults = {
+      ...newPost,
       id: Date.now(),
-      category,
-      content,
       author: "Budi",
       date: getFormattedDate(),
       comments: 0,
       upvotes: 0,
       downvotes: 0,
     };
-    setPosts((prev) => [newPost, ...prev]);
+    setPosts((prev) => [postWithDefaults, ...prev]);
   };
+  
 
   const handleVote = (id, type) => {
     setPosts((prevPosts) =>

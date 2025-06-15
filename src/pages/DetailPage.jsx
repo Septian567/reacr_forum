@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { usePostContext } from "../contexts/PostContext";
 import PostHeader from "../components/PostHeader";
-import useDetailPage from "../hooks/useDetailPage";
 import { formatDate } from "../utils/dateFormatter";
 import { MessageCircle, ThumbsUp, ThumbsDown } from "react-feather";
 import "../styles/detailPage.css";
@@ -53,7 +54,6 @@ const PostActions = ({
   </div>
 );
 
-
 // Komponen CommentForm
 const CommentForm = ({ author, comment, setComment, onSubmit }) => (
   <div className="comment-form">
@@ -101,7 +101,6 @@ const CommentList = ({ comments, onVote }) => (
   </div>
 );
 
-
 // Komponen PostItem
 const PostItem = ({ post, onVote }) => (
   <div className="post-item">
@@ -125,16 +124,21 @@ const PostItem = ({ post, onVote }) => (
 
 // Komponen utama DetailPage
 const DetailPage = () => {
-  const {
-    post,
-    comment,
-    setComment,
-    comments,
-    handleAddComment,
-    handleVoteComment,
-    handlePostVote,
-    navigate,
-  } = useDetailPage();
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const { posts, comments, votePost, addComment, voteComment } =
+    usePostContext();
+
+  const post = posts.find((p) => p.id.toString() === id);
+  const postComments = comments[id] || [];
+  const [comment, setComment] = useState("");
+
+  const handleAddComment = () => {
+    if (comment.trim()) {
+      addComment(post.id, comment.trim());
+      setComment("");
+    }
+  };
 
   if (!post) {
     return (
@@ -148,14 +152,17 @@ const DetailPage = () => {
   return (
     <div className="column center main-grid detail-page-container">
       <PostHeader onBack={() => navigate(-1)} author={post.author} />
-      <PostItem post={post} onVote={handlePostVote} />
+      <PostItem post={post} onVote={(type) => votePost(post.id, type)} />
       <CommentForm
         author={post.author}
         comment={comment}
         setComment={setComment}
         onSubmit={handleAddComment}
       />
-      <CommentList comments={comments} onVote={handleVoteComment} />
+      <CommentList
+        comments={postComments}
+        onVote={(commentId, type) => voteComment(post.id, commentId, type)}
+      />
     </div>
   );
 };

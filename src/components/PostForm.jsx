@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
-import '../styles/postForm.css';
+import React, { useState } from "react";
+import "../styles/postForm.css";
 
 const PostForm = ({ onPost }) => {
-  const [category, setCategory] = useState('');
-  const [content, setContent] = useState('');
+  const [category, setCategory] = useState("");
+  const [content, setContent] = useState("");
 
   const handleSubmit = () => {
     if (category.trim() && content.trim()) {
-      onPost(category, content);
-      setCategory('');
-      setContent('');
+      const newPost = {
+        id: Date.now(),
+        author: "Anonymous", // bisa ganti sesuai user login
+        category,
+        content,
+        date: new Date().toISOString(),
+        comments: 0,
+        upvotes: 0,
+        downvotes: 0,
+      };
+
+      onPost(newPost); // kirim objek lengkap
+      setCategory("");
+      setContent("");
     }
   };
 

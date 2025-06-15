@@ -1,50 +1,75 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+// contexts/PostContext.js
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+} from "react";
 
-// Buat context
 const PostContext = createContext();
 
-// Fungsi bantu: simpan dan ambil dari localStorage
-const LOCAL_STORAGE_KEY = "posts_data";
-
-const getPostsFromStorage = () => {
-  try {
-    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
-  } catch (error) {
-    console.error("Error reading from localStorage:", error);
-    return [];
-  }
-};
-
-const savePostsToStorage = (posts) => {
-  try {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(posts));
-  } catch (error) {
-    console.error("Error saving to localStorage:", error);
-  }
-};
-
-// Provider
 export const PostProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
+  const [comments, setComments] = useState({});
+  const [selectedCategory, setSelectedCategory] = useState(null); // 🔹 Filter kategori
+  const [hasLoaded, setHasLoaded] = useState(false);
 
-  // Load posts saat pertama kali render
+  // Load dari localStorage saat pertama kali
   useEffect(() => {
-    const savedPosts = getPostsFromStorage();
-    setPosts(savedPosts);
+    const storedPosts = localStorage.getItem("posts");
+    const storedComments = localStorage.getItem("comments");
+
+    if (storedPosts) {
+      try {
+        setPosts(JSON.parse(storedPosts));
+      } catch (err) {
+        console.error("Gagal parsing posts", err);
+      }
+    }
+
+    if (storedComments) {
+      try {
+        setComments(JSON.parse(storedComments));
+      } catch (err) {
+        console.error("Gagal parsing comments", err);
+      }
+    }
+
+    setHasLoaded(true);
   }, []);
 
-  // Simpan ke localStorage setiap kali posts berubah
+  // Simpan ke localStorage ketika berubah
   useEffect(() => {
-    console.log("Saving posts to localStorage:", posts); // 🔍 Debug log
-    savePostsToStorage(posts);
-  }, [posts]);
+    if (hasLoaded) {
+      localStorage.setItem("posts", JSON.stringify(posts));
+      localStorage.setItem("comments", JSON.stringify(comments));
+    }
+  }, [posts, comments, hasLoaded]);
+
+  // 🔹 Filter kategori (klik & toggle)
+  const toggleCategoryFilter = (category) => {
+    setSelectedCategory((prev) => (prev === category ? null : category));
+  };
+
+  // 🔹 Gunakan useMemo agar efisien
+  const filteredPosts = useMemo(() => {
+    if (!selectedCategory) return posts;
+    return posts.filter((post) => post.category === selectedCategory);
+  }, [posts, selectedCategory]);
 
   const addPost = (newPost) => {
-    console.log("Adding post:", newPost); // 🔍 Debug log
-    setPosts((prev) => [...prev, newPost]);
+    const postWithDefaults = {
+      ...newPost,
+      id: Date.now(),
+      author: "Budi",
+      date: new Date().toISOString(),
+      comments: 0,
+      upvotes: 0,
+      downvotes: 0,
+    };
+    setPosts((prev) => [postWithDefaults, ...prev]);
   };
-  
 
   const votePost = (postId, type) => {
     setPosts((prev) =>
@@ -60,16 +85,75 @@ export const PostProvider = ({ children }) => {
     );
   };
 
+  const addComment = (postId, content) => {
+    const newComment = {
+      id: Date.now(),
+      author: "Kamu",
+      content,
+      date: new Date().toISOString(),
+      upvotes: 0,
+      downvotes: 0,
+    };
+
+    setComments((prev) => {
+      const updated = {
+        ...prev,
+        [postId]: [newComment, ...(prev[postId] || [])],
+      };
+      return updated;
+    });
+
+    setPosts((prev) =>
+      prev.map((post) =>
+        post.id === postId ? { ...post, comments: post.comments + 1 } : post
+      )
+    );
+  };
+
+  const voteComment = (postId, commentId, type) => {
+    setComments((prev) => {
+      const updated = (prev[postId] || []).map((c) =>
+        c.id === commentId
+          ? {
+              ...c,
+              upvotes: type === "up" ? c.upvotes + 1 : c.upvotes,
+              downvotes: type === "down" ? c.downvotes + 1 : c.downvotes,
+            }
+          : c
+      );
+
+      return {
+        ...prev,
+        [postId]: updated,
+      };
+    });
+  };
+
   const deleteAllPosts = () => {
-    setPosts([]);
+    if (window.confirm("Hapus semua postingan?")) {
+      setPosts([]);
+      setComments({});
+    }
   };
 
   return (
-    <PostContext.Provider value={{ posts, addPost, votePost, deleteAllPosts }}>
+    <PostContext.Provider
+      value={{
+        posts,
+        filteredPosts, // 🔹 post setelah difilter
+        comments,
+        addPost,
+        votePost,
+        deleteAllPosts,
+        addComment,
+        voteComment,
+        selectedCategory, // 🔹 kategori aktif
+        toggleCategoryFilter, // 🔹 fungsi toggle
+      }}
+    >
       {children}
     </PostContext.Provider>
   );
 };
 
-// Hook untuk digunakan di komponen
 export const usePostContext = () => useContext(PostContext);

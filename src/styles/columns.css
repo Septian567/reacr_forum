@@ -43,3 +43,7 @@
   background-color: #e04345;
 }
 
+.category-item.selected {
+  background-color: #d0f0ff;
+  border-radius: 6px;
+}

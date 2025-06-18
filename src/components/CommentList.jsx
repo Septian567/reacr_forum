@@ -1,7 +1,7 @@
 import React from "react";
 import { formatDate } from "../utils/dateFormatter";
 import { ThumbsUp, ThumbsDown } from "react-feather";
-import "../styles/CommentList.css"; // pastikan path-nya sesuai struktur project kamu
+import "../styles/CommentList.css";
 
 const CommentList = ({ comments, onVote }) => (
   <div className="comment-list">

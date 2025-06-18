@@ -15,10 +15,26 @@ TODO 12 Juni 2025
 1. merapikan tampilan detail page  -- SUCCESS
 2. memperbaiki link ke detail page  -- SUCCESS
 3. memasukkan kategori ke menu kategori  -- SUCCESS
-4. membuat Leaderboard
-5. membuat halaman register dan login
-6. membuat modal untuk tombol post
+
+TODO 15 Juni 2025
+4. membuat Leaderboard -- SUCCESS
+5. membuat halaman register dan login -- SUCCESS
+6. membuat modal untuk tombol post  -- SUCCESS
 7. menghubungkan ke api
 8. refactoring ke redux
 
+
+TODO 17 Juni 2025
+- menghubungkan ke API
+1. perbaiki waktu -- SUCCESS
+2. hubungkan votes di mainpage dengan API --SUCCESS
+
+TODO 18 Juni 2025
+1. hubungkan detail thread dengan API
+- tampilkan foto profil
+- tampilkan konten
+- perbaiki tanggal
+- perbaiki icon comment
+- pasang fitur comment api
+- pasang vitur votes comment api
 

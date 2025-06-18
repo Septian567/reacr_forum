@@ -2,6 +2,7 @@ import React from "react";
 import { MessageCircle, ThumbsUp, ThumbsDown } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import PostDate from "./PostDate";
+import DOMPurify from "dompurify"; // Tambahkan ini
 import "../styles/postList.css";
 
 const PostList = ({ posts, onVote }) => {
@@ -22,32 +23,38 @@ const PostList = ({ posts, onVote }) => {
         >
           <div className="profile-wrapper">
             <img
-              src="https://via.placeholder.com/40"
-              alt="Profile"
+              src={post.avatar || "https://via.placeholder.com/40"}
+              alt={post.author || "User"}
               className="profile-photo"
             />
           </div>
 
           <div className="post-content-wrapper">
             <div className="post-header">
-              <span className="account-name">{post.author}</span>
-              <PostDate dateString={post.date} mode="auto" />
+              <span className="account-name">{post.author || "Anonim"}</span>
+              <PostDate dateString={post.createdAt} mode="auto" />
             </div>
 
-            <h4 className="post-category">#{post.category}</h4>
+            <h4 className="post-title">
+              {post.title?.trim() ? post.title : "judul"}
+            </h4>
+
+            <h5 className="post-category">#{post.category}</h5>
 
             <div className="post-content-link">
-              <p className="post-content">{post.content}</p>
+              {/* Render konten HTML secara aman */}
+              <div
+                className="post-content"
+                dangerouslySetInnerHTML={{
+                  __html: DOMPurify.sanitize(post.body),
+                }}
+              ></div>
             </div>
 
             <div className="post-actions">
               <div className="action-item" onClick={(e) => e.stopPropagation()}>
                 <MessageCircle size={16} />
-                <span>
-                  {Array.isArray(post.comments)
-                    ? post.comments.length
-                    : post.comments}
-                </span>
+                <span>{post.totalComments ?? 0}</span>
               </div>
               <div
                 className="action-item"
@@ -57,7 +64,7 @@ const PostList = ({ posts, onVote }) => {
                 }}
               >
                 <ThumbsUp size={16} />
-                <span>{post.upvotes}</span>
+                <span>{post.upVotesBy?.length ?? 0}</span>
               </div>
               <div
                 className="action-item"
@@ -67,7 +74,7 @@ const PostList = ({ posts, onVote }) => {
                 }}
               >
                 <ThumbsDown size={16} />
-                <span>{post.downvotes}</span>
+                <span>{post.downVotesBy?.length ?? 0}</span>
               </div>
             </div>
           </div>

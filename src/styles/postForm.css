@@ -31,7 +31,7 @@
   }
   
   .category-input,
-  .content-input {
+  .content-input, .title-input {
     width: 100%;
     border: 1px solid #ccc;
     padding: 8px;
@@ -77,3 +77,9 @@
     display: inline;
   }
   
+
+  /* Untuk memaksa teks panjang turun ke bawah */
+.ql-editor {
+  word-break: break-word;
+  white-space: pre-wrap;
+}

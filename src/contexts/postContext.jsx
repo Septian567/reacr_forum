@@ -6,131 +6,209 @@ import React, {
   useState,
   useMemo,
 } from "react";
+import api from "../utils/api";
 
 const PostContext = createContext();
 
 export const PostProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState({});
-  const [selectedCategory, setSelectedCategory] = useState(null); // 🔹 Filter kategori
-  const [hasLoaded, setHasLoaded] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [usersMap, setUsersMap] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Load dari localStorage saat pertama kali
+  // Utilitas untuk membentuk mapping userId -> data user
+  const buildUsersMap = (users) =>
+    users.reduce((acc, user) => {
+      acc[user.id] = user;
+      return acc;
+    }, {});
+
+  // Utilitas untuk menambahkan data author/avatar ke thread
+  const enrichThread = (thread, users) => {
+    const owner = users[thread.ownerId];
+    return {
+      ...thread,
+      author: owner?.name || "Anonim",
+      avatar: owner?.avatar || "https://via.placeholder.com/40",
+      totalComments: thread.comments?.length || 0,
+      upvotes: thread.upVotesBy?.length || 0,
+      downvotes: thread.downVotesBy?.length || 0,
+    };
+  };
+
   useEffect(() => {
-    const storedPosts = localStorage.getItem("posts");
-    const storedComments = localStorage.getItem("comments");
-
-    if (storedPosts) {
+    const fetchPostsAndUsers = async () => {
       try {
-        setPosts(JSON.parse(storedPosts));
-      } catch (err) {
-        console.error("Gagal parsing posts", err);
-      }
-    }
+        setIsLoading(true);
+        const [threads, users] = await Promise.all([
+          api.getAllThreads(),
+          api.getAllUsers(),
+        ]);
 
-    if (storedComments) {
-      try {
-        setComments(JSON.parse(storedComments));
-      } catch (err) {
-        console.error("Gagal parsing comments", err);
-      }
-    }
+        const usersMap = buildUsersMap(users);
+        setUsersMap(usersMap);
 
-    setHasLoaded(true);
+        const mappedThreads = threads.map((post) =>
+          enrichThread(post, usersMap)
+        );
+
+        setPosts(mappedThreads);
+      } catch (err) {
+        console.error("Gagal mengambil data:", err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPostsAndUsers();
   }, []);
 
-  // Simpan ke localStorage ketika berubah
-  useEffect(() => {
-    if (hasLoaded) {
-      localStorage.setItem("posts", JSON.stringify(posts));
-      localStorage.setItem("comments", JSON.stringify(comments));
-    }
-  }, [posts, comments, hasLoaded]);
-
-  // 🔹 Filter kategori (klik & toggle)
   const toggleCategoryFilter = (category) => {
     setSelectedCategory((prev) => (prev === category ? null : category));
   };
 
-  // 🔹 Gunakan useMemo agar efisien
   const filteredPosts = useMemo(() => {
     if (!selectedCategory) return posts;
     return posts.filter((post) => post.category === selectedCategory);
   }, [posts, selectedCategory]);
 
-  const addPost = (newPost) => {
-    const postWithDefaults = {
-      ...newPost,
-      id: Date.now(),
-      author: "Budi",
-      date: new Date().toISOString(),
-      comments: 0,
-      upvotes: 0,
-      downvotes: 0,
-    };
-    setPosts((prev) => [postWithDefaults, ...prev]);
-  };
+  const addPost = async (newPost) => {
+    try {
+      const response = await api.createThread(newPost);
+      const threadId = response.data.thread.id;
+      const rawThread = await api.getThreadDetail(threadId);
 
-  const votePost = (postId, type) => {
-    setPosts((prev) =>
-      prev.map((post) =>
-        post.id === postId
-          ? {
-              ...post,
-              upvotes: type === "up" ? post.upvotes + 1 : post.upvotes,
-              downvotes: type === "down" ? post.downvotes + 1 : post.downvotes,
-            }
-          : post
-      )
-    );
-  };
-
-  const addComment = (postId, content) => {
-    const newComment = {
-      id: Date.now(),
-      author: "Kamu",
-      content,
-      date: new Date().toISOString(),
-      upvotes: 0,
-      downvotes: 0,
-    };
-
-    setComments((prev) => {
-      const updated = {
-        ...prev,
-        [postId]: [newComment, ...(prev[postId] || [])],
+      // Gunakan data user dari newPost
+      const enrichedThread = {
+        ...rawThread,
+        author: newPost.user?.name || "Anonim",
+        avatar: newPost.user?.avatar || "https://via.placeholder.com/40",
+        totalComments: rawThread.comments?.length || 0,
+        upvotes: rawThread.upVotesBy?.length || 0,
+        downvotes: rawThread.downVotesBy?.length || 0,
       };
-      return updated;
-    });
 
-    setPosts((prev) =>
-      prev.map((post) =>
-        post.id === postId ? { ...post, comments: post.comments + 1 } : post
-      )
-    );
+      setPosts((prev) => [enrichedThread, ...prev]);
+    } catch (error) {
+      console.error("Gagal menambah thread:", error.message);
+      throw error;
+    }
   };
 
-  const voteComment = (postId, commentId, type) => {
-    setComments((prev) => {
-      const updated = (prev[postId] || []).map((c) =>
-        c.id === commentId
-          ? {
-              ...c,
-              upvotes: type === "up" ? c.upvotes + 1 : c.upvotes,
-              downvotes: type === "down" ? c.downvotes + 1 : c.downvotes,
-            }
-          : c
+  const votePost = async (postId, type) => {
+    try {
+      // Simpan data post sebelum diupdate untuk mempertahankan author info
+      const currentPost = posts.find((post) => post.id === postId);
+
+      // Lakukan vote
+      if (type === "up") {
+        await api.upVoteThread(postId);
+      } else if (type === "down") {
+        await api.downVoteThread(postId);
+      } else {
+        await api.neutralizeVoteThread(postId);
+      }
+
+      // Dapatkan thread yang diperbarui
+      const updated = await api.getThreadDetail(postId);
+
+      // Buat thread yang diperbarui dengan mempertahankan data author
+      const enriched = {
+        ...updated,
+        author:
+          currentPost?.author || usersMap[updated.ownerId]?.name || "Anonim",
+        avatar:
+          currentPost?.avatar ||
+          usersMap[updated.ownerId]?.avatar ||
+          "https://via.placeholder.com/40",
+        totalComments: updated.comments?.length || 0,
+        upvotes: updated.upVotesBy?.length || 0,
+        downvotes: updated.downVotesBy?.length || 0,
+      };
+
+      setPosts((prev) =>
+        prev.map((post) => (post.id === postId ? enriched : post))
       );
+    } catch (error) {
+      console.error("Gagal voting:", error.message);
+      throw error;
+    }
+  };
 
-      return {
+  const addComment = async (postId, content) => {
+    try {
+      const comment = await api.createComment({ threadId: postId, content });
+      setComments((prev) => ({
         ...prev,
-        [postId]: updated,
+        [postId]: [comment, ...(prev[postId] || [])],
+      }));
+
+      const updated = await api.getThreadDetail(postId);
+      const currentPost = posts.find((post) => post.id === postId);
+
+      const enriched = {
+        ...updated,
+        author:
+          currentPost?.author || usersMap[updated.ownerId]?.name || "Anonim",
+        avatar:
+          currentPost?.avatar ||
+          usersMap[updated.ownerId]?.avatar ||
+          "https://via.placeholder.com/40",
+        totalComments: updated.comments?.length || 0,
+        upvotes: updated.upVotesBy?.length || 0,
+        downvotes: updated.downVotesBy?.length || 0,
       };
-    });
+
+      setPosts((prev) =>
+        prev.map((post) => (post.id === postId ? enriched : post))
+      );
+    } catch (err) {
+      console.error("Gagal menambah komentar:", err.message);
+      throw err;
+    }
+  };
+
+  const voteComment = async (postId, commentId, type) => {
+    try {
+      const currentPost = posts.find((post) => post.id === postId);
+
+      if (type === "up") {
+        await api.upVoteComment({ threadId: postId, commentId });
+      } else if (type === "down") {
+        await api.downVoteComment({ threadId: postId, commentId });
+      } else {
+        await api.neutralizeVoteComment({ threadId: postId, commentId });
+      }
+
+      const updatedThread = await api.getThreadDetail(postId);
+
+      const enriched = {
+        ...updatedThread,
+        author:
+          currentPost?.author ||
+          usersMap[updatedThread.ownerId]?.name ||
+          "Anonim",
+        avatar:
+          currentPost?.avatar ||
+          usersMap[updatedThread.ownerId]?.avatar ||
+          "https://via.placeholder.com/40",
+        totalComments: updatedThread.comments?.length || 0,
+        upvotes: updatedThread.upVotesBy?.length || 0,
+        downvotes: updatedThread.downVotesBy?.length || 0,
+      };
+
+      setPosts((prev) =>
+        prev.map((post) => (post.id === postId ? enriched : post))
+      );
+    } catch (err) {
+      console.error("Gagal vote komentar:", err.message);
+      throw err;
+    }
   };
 
   const deleteAllPosts = () => {
-    if (window.confirm("Hapus semua postingan?")) {
+    if (window.confirm("Hapus semua postingan lokal?")) {
       setPosts([]);
       setComments({});
     }
@@ -140,15 +218,16 @@ export const PostProvider = ({ children }) => {
     <PostContext.Provider
       value={{
         posts,
-        filteredPosts, // 🔹 post setelah difilter
+        filteredPosts,
         comments,
         addPost,
         votePost,
         deleteAllPosts,
         addComment,
         voteComment,
-        selectedCategory, // 🔹 kategori aktif
-        toggleCategoryFilter, // 🔹 fungsi toggle
+        selectedCategory,
+        toggleCategoryFilter,
+        isLoading,
       }}
     >
       {children}

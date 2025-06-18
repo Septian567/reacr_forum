@@ -5,12 +5,13 @@ import PostList from "../components/PostList";
 import { usePostContext } from "../contexts/PostContext";
 
 const MainPage = () => {
-  const { posts, addPost, votePost, deleteAllPosts, selectedCategory } =
-    usePostContext();
-
-  const filteredPosts = selectedCategory
-    ? posts.filter((post) => post.category === selectedCategory)
-    : posts;
+  const {
+    filteredPosts, // Sudah termasuk enrichment dan filter kategori
+    addPost,
+    votePost,
+    deleteAllPosts,
+    selectedCategory,
+  } = usePostContext();
 
   return (
     <div className="column center main-grid">

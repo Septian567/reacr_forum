@@ -1,20 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { usePostContext } from "../contexts/PostContext";
+import api from "../utils/api";
 import PostHeader from "../components/PostHeader";
 import { formatDate } from "../utils/dateFormatter";
 import { MessageCircle, ThumbsUp, ThumbsDown } from "react-feather";
+import DOMPurify from "dompurify";
 import "../styles/detailPage.css";
 import "../styles/postList.css";
 import "../styles/CommentForm.css";
 import "../styles/CommentList.css";
 
 // Komponen ProfilePhoto
-const ProfilePhoto = () => (
+const ProfilePhoto = ({ username, getPhoto }) => (
   <div className="profile-wrapper">
     <img
-      src="https://via.placeholder.com/40"
-      alt="Profile"
+      src={getPhoto(username)}
+      alt={`Foto profil ${username}`}
       className="profile-photo"
     />
   </div>
@@ -54,10 +55,10 @@ const PostActions = ({
   </div>
 );
 
-// Komponen CommentForm
-const CommentForm = ({ author, comment, setComment, onSubmit }) => (
+// Komentar
+const CommentForm = ({ author, comment, setComment, onSubmit, getPhoto }) => (
   <div className="comment-form">
-    <ProfilePhoto />
+    <ProfilePhoto username={author} getPhoto={getPhoto} />
     <div className="form-wrapper">
       <div className="reply-label">Replying to @{author}</div>
       <textarea
@@ -70,8 +71,8 @@ const CommentForm = ({ author, comment, setComment, onSubmit }) => (
   </div>
 );
 
-// Komponen CommentList
-const CommentList = ({ comments, onVote }) => (
+// Daftar komentar
+const CommentList = ({ comments, onVote, getPhoto }) => (
   <div className="comment-list">
     <h4>{comments.length} Komentar:</h4>
     {comments.length === 0 ? (
@@ -79,18 +80,19 @@ const CommentList = ({ comments, onVote }) => (
     ) : (
       comments.map((c) => (
         <div key={c.id} className="comment-list-item">
-          <ProfilePhoto />
+          <ProfilePhoto username={c.owner.name} getPhoto={getPhoto} />
           <div style={{ flex: 1 }}>
             <div className="comment-header">
-              <span className="comment-author">{c.author}</span>
-              <span className="comment-meta">{formatDate(c.date)}</span>
+              <span className="comment-author">{c.owner.name}</span>
+              <span className="comment-meta">{formatDate(c.createdAt)}</span>
             </div>
-            <p className="comment-content">{c.content}</p>
-
-            {/* Gunakan PostActions sebagai comment vote */}
+            <div
+              className="comment-content"
+              dangerouslySetInnerHTML={{ __html: c.content }}
+            />
             <PostActions
-              upvotes={c.upvotes || 0}
-              downvotes={c.downvotes || 0}
+              upvotes={c.upVotesBy?.length || 0}
+              downvotes={c.downVotesBy?.length || 0}
               onVote={(type) => onVote(c.id, type)}
               showComments={false}
             />
@@ -101,67 +103,119 @@ const CommentList = ({ comments, onVote }) => (
   </div>
 );
 
-// Komponen PostItem
-const PostItem = ({ post, onVote }) => (
+// Postingan utama
+const PostItem = ({ post, onVote, getPhoto }) => (
   <div className="post-item">
-    <ProfilePhoto />
+    <ProfilePhoto username={post.owner.name} getPhoto={getPhoto} />
     <div className="post-content-wrapper">
-      <span className="account-name">{post.author}</span>
+      <span className="account-name">{post.owner.name}</span>
       <h4 className="post-category">#{post.category}</h4>
-      <p className="post-detail-content">{post.content}</p>
+      <h3 className="post-title">{post.title}</h3>
+      <div
+        className="post-detail-content"
+        dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.body) }}
+      />
       <span className="post-date spaced-date">
-        {formatDate(post.date, "full")}
+        {formatDate(post.createdAt, "full")}
       </span>
       <PostActions
-        comments={post.comments}
-        upvotes={post.upvotes}
-        downvotes={post.downvotes}
+        comments={post.comments?.length}
+        upvotes={post.upVotesBy?.length}
+        downvotes={post.downVotesBy?.length}
         onVote={onVote}
       />
     </div>
   </div>
 );
 
-// Komponen utama DetailPage
+// Halaman detail utama
 const DetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { posts, comments, votePost, addComment, voteComment } =
-    usePostContext();
 
-  const post = posts.find((p) => p.id.toString() === id);
-  const postComments = comments[id] || [];
+  const [thread, setThread] = useState(null);
   const [comment, setComment] = useState("");
+  const [users, setUsers] = useState([]);
+
+  // Ambil thread dan user
+  useEffect(() => {
+    api.getThreadDetail(id).then(setThread).catch(console.error);
+
+    api.getAllUsers().then(setUsers).catch(console.error);
+  }, [id]);
+
+  const getUserProfilePhoto = (username) => {
+    const user = users.find((u) => u.name === username);
+    return user?.avatar || "https://via.placeholder.com/40";
+  };
 
   const handleAddComment = () => {
     if (comment.trim()) {
-      addComment(post.id, comment.trim());
+      api
+        .createComment({ threadId: id, content: comment })
+        .then(() => api.getThreadDetail(id))
+        .then(setThread)
+        .catch(console.error);
       setComment("");
     }
   };
 
-  if (!post) {
+  const handleVotePost = (type) => {
+    const voteFn = {
+      up: api.upVoteThread,
+      down: api.downVoteThread,
+    }[type];
+
+    if (voteFn) {
+      voteFn(id)
+        .then(() => api.getThreadDetail(id))
+        .then(setThread)
+        .catch(console.error);
+    }
+  };
+
+  const handleVoteComment = (commentId, type) => {
+    const voteFn = {
+      up: api.upVoteComment,
+      down: api.downVoteComment,
+    }[type];
+
+    if (voteFn) {
+      voteFn({ threadId: id, commentId })
+        .then(() => api.getThreadDetail(id))
+        .then(setThread)
+        .catch(console.error);
+    }
+  };
+
+  if (!thread) {
     return (
       <div className="column center main-grid detail-page-container">
         <PostHeader onBack={() => navigate(-1)} author="" />
-        <p>Postingan tidak ditemukan.</p>
+        <p>Memuat detail postingan...</p>
       </div>
     );
   }
 
   return (
     <div className="column center main-grid detail-page-container">
-      <PostHeader onBack={() => navigate(-1)} author={post.author} />
-      <PostItem post={post} onVote={(type) => votePost(post.id, type)} />
+      <PostHeader onBack={() => navigate(-1)} author={thread.owner.name} />
+      <PostItem
+        post={thread}
+        onVote={handleVotePost}
+        getPhoto={getUserProfilePhoto}
+      />
       <CommentForm
-        author={post.author}
+        author={thread.owner.name}
         comment={comment}
         setComment={setComment}
         onSubmit={handleAddComment}
+        getPhoto={getUserProfilePhoto}
       />
       <CommentList
-        comments={postComments}
-        onVote={(commentId, type) => voteComment(post.id, commentId, type)}
+        comments={thread.comments}
+        onVote={handleVoteComment}
+        getPhoto={getUserProfilePhoto}
       />
     </div>
   );

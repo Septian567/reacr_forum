@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { User as UserIcon } from "react-feather"; // Tambahkan ini
 import "../styles/postForm.css";
 import api from "../utils/api";
 
@@ -40,7 +41,7 @@ const PostForm = ({ onPost }) => {
         title,
         body: content,
         category,
-        user
+        user,
       });
 
       setTitle("");
@@ -56,12 +57,19 @@ const PostForm = ({ onPost }) => {
   return (
     <div className="post-form input-row">
       <div className="profile-wrapper">
-        <img
-          src={user?.avatar || "https://via.placeholder.com/40"}
-          alt={user?.name || "User"}
-          className="profile-photo"
-        />
+        {user?.avatar ? (
+          <img
+            src={user.avatar}
+            alt={user.name || "User"}
+            className="profile-photo"
+          />
+        ) : (
+          <div className="profile-photo circle-icon">
+            <UserIcon size={20} />
+          </div>
+        )}
       </div>
+
       <div className="form-fields">
         <input
           type="text"

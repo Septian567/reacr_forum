@@ -20,8 +20,8 @@ TODO 15 Juni 2025
 4. membuat Leaderboard -- SUCCESS
 5. membuat halaman register dan login -- SUCCESS
 6. membuat modal untuk tombol post  -- SUCCESS
-7. menghubungkan ke api
-8. refactoring ke redux
+7. menghubungkan ke api -- SUCCESS
+8. refactoring ke redux 
 
 
 TODO 17 Juni 2025
@@ -37,4 +37,19 @@ TODO 18 Juni 2025
 - perbaiki icon comment -- SUCCESS
 - pasang fitur comment api -- SUCCESS
 - pasang vitur votes comment api -- SUCCESS
+- sinkronkan jumlah komentar di mainPage dan detailPage
 
+2. hubungkan Leaderboard ke API
+- tampilkan nama user dan email user -- SUCCESS
+- tampilkan foto profil, emali, dan skor semua user -- SUCCESS
+
+3. hubungkan modal post ke API
+
+TODO 20 Juni 2025
+- beri foto default untuk user yang belum login  -- SUCCESS
+- beri keterangan anonim untuk user yang belum login -- SUCCESS
+- saat belum login, ganti tulisan logout dengan login -- SUCCESS
+- fitur post disembunyikan saat belum login -- SUCCESS
+
+
+- Refactoring ke redux

@@ -17,23 +17,21 @@ export const PostProvider = ({ children }) => {
   const [usersMap, setUsersMap] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
-  // Utilitas untuk membentuk mapping userId -> data user
   const buildUsersMap = (users) =>
     users.reduce((acc, user) => {
       acc[user.id] = user;
       return acc;
     }, {});
 
-  // Utilitas untuk menambahkan data author/avatar ke thread
   const enrichThread = (thread, users) => {
     const owner = users[thread.ownerId];
     return {
       ...thread,
       author: owner?.name || "Anonim",
       avatar: owner?.avatar || "https://via.placeholder.com/40",
-      totalComments: thread.comments?.length || 0,
-      upvotes: thread.upVotesBy?.length || 0,
-      downvotes: thread.downVotesBy?.length || 0,
+      totalComments: thread.comments?.length || 0, // Pastikan ini menggunakan length
+      upVotesBy: thread.upVotesBy || [],
+      downVotesBy: thread.downVotesBy || [],
     };
   };
 
@@ -49,11 +47,26 @@ export const PostProvider = ({ children }) => {
         const usersMap = buildUsersMap(users);
         setUsersMap(usersMap);
 
-        const mappedThreads = threads.map((post) =>
-          enrichThread(post, usersMap)
+        // Ambil detail untuk masing-masing thread agar jumlah komentar valid
+        const enrichedWithDetails = await Promise.all(
+          threads.map(async (thread) => {
+            try {
+              const detail = await api.getThreadDetail(thread.id);
+              return enrichThread(
+                { ...thread, comments: detail.comments },
+                usersMap
+              );
+            } catch (err) {
+              console.warn(
+                `Gagal ambil detail thread ${thread.id}:`,
+                err.message
+              );
+              return enrichThread(thread, usersMap); // fallback jika gagal
+            }
+          })
         );
 
-        setPosts(mappedThreads);
+        setPosts(enrichedWithDetails);
       } catch (err) {
         console.error("Gagal mengambil data:", err.message);
       } finally {
@@ -79,7 +92,6 @@ export const PostProvider = ({ children }) => {
       const threadId = response.data.thread.id;
       const rawThread = await api.getThreadDetail(threadId);
 
-      // Gunakan data user dari newPost
       const enrichedThread = {
         ...rawThread,
         author: newPost.user?.name || "Anonim",
@@ -98,10 +110,8 @@ export const PostProvider = ({ children }) => {
 
   const votePost = async (postId, type) => {
     try {
-      // Simpan data post sebelum diupdate untuk mempertahankan author info
       const currentPost = posts.find((post) => post.id === postId);
 
-      // Lakukan vote
       if (type === "up") {
         await api.upVoteThread(postId);
       } else if (type === "down") {
@@ -110,10 +120,8 @@ export const PostProvider = ({ children }) => {
         await api.neutralizeVoteThread(postId);
       }
 
-      // Dapatkan thread yang diperbarui
       const updated = await api.getThreadDetail(postId);
 
-      // Buat thread yang diperbarui dengan mempertahankan data author
       const enriched = {
         ...updated,
         author:
@@ -139,29 +147,23 @@ export const PostProvider = ({ children }) => {
   const addComment = async (postId, content) => {
     try {
       const comment = await api.createComment({ threadId: postId, content });
+
+      // Tambahkan komentar ke state lokal
       setComments((prev) => ({
         ...prev,
         [postId]: [comment, ...(prev[postId] || [])],
       }));
 
-      const updated = await api.getThreadDetail(postId);
-      const currentPost = posts.find((post) => post.id === postId);
-
-      const enriched = {
-        ...updated,
-        author:
-          currentPost?.author || usersMap[updated.ownerId]?.name || "Anonim",
-        avatar:
-          currentPost?.avatar ||
-          usersMap[updated.ownerId]?.avatar ||
-          "https://via.placeholder.com/40",
-        totalComments: updated.comments?.length || 0,
-        upvotes: updated.upVotesBy?.length || 0,
-        downvotes: updated.downVotesBy?.length || 0,
-      };
-
+      // Update totalComments di post terkait
       setPosts((prev) =>
-        prev.map((post) => (post.id === postId ? enriched : post))
+        prev.map((post) =>
+          post.id === postId
+            ? {
+                ...post,
+                totalComments: (post.totalComments ?? 0) + 1,
+              }
+            : post
+        )
       );
     } catch (err) {
       console.error("Gagal menambah komentar:", err.message);

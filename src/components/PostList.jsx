@@ -2,7 +2,7 @@ import React from "react";
 import { MessageCircle, ThumbsUp, ThumbsDown } from "react-feather";
 import { useNavigate } from "react-router-dom";
 import PostDate from "./PostDate";
-import DOMPurify from "dompurify"; // Tambahkan ini
+import DOMPurify from "dompurify";
 import "../styles/postList.css";
 
 const PostList = ({ posts, onVote }) => {
@@ -54,7 +54,8 @@ const PostList = ({ posts, onVote }) => {
             <div className="post-actions">
               <div className="action-item" onClick={(e) => e.stopPropagation()}>
                 <MessageCircle size={16} />
-                <span>{post.totalComments ?? 0}</span>
+                <span>{post.comments?.length ?? 0}</span>{" "}
+                {/* Gunakan comments.length */}
               </div>
               <div
                 className="action-item"

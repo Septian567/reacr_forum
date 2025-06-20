@@ -23,6 +23,15 @@
     object-fit: cover;
   }
   
+  .circle-icon {
+    background-color: greenyellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+  }
+  
+  
   .form-fields {
     flex: 1;
     display: flex;

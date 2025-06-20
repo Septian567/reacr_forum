@@ -1,37 +1,45 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/columns.css";
 import PostForm from "../components/PostForm";
 import PostList from "../components/PostList";
 import { usePostContext } from "../contexts/PostContext";
+import api from "../utils/api";
 
 const MainPage = () => {
-  const {
-    filteredPosts, // Sudah termasuk enrichment dan filter kategori
-    addPost,
-    votePost,
-    deleteAllPosts,
-    selectedCategory,
-  } = usePostContext();
+  const [user, setUser] = useState(null);
+
+  const { filteredPosts, addPost, votePost, selectedCategory } =
+    usePostContext();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const profile = await api.getOwnProfile();
+        setUser(profile);
+      } catch (err) {
+        console.warn("User belum login atau gagal fetch:", err.message);
+        setUser(null); // reset if failed
+      }
+    };
+
+    fetchUser();
+
+    // 🔁 Tambahkan listener untuk logout event
+    const handleLogout = () => {
+      setUser(null);
+    };
+
+    window.addEventListener("userLoggedOut", handleLogout);
+
+    // Bersihkan listener saat komponen dibongkar
+    return () => {
+      window.removeEventListener("userLoggedOut", handleLogout);
+    };
+  }, []);
 
   return (
     <div className="column center main-grid">
-      <PostForm onPost={addPost} />
-
-      <div style={{ marginBottom: "15px", textAlign: "right" }}>
-        <button
-          onClick={deleteAllPosts}
-          style={{
-            backgroundColor: "#ff4d4f",
-            border: "none",
-            padding: "8px 16px",
-            color: "white",
-            borderRadius: "6px",
-            cursor: "pointer",
-          }}
-        >
-          Delete All Posts
-        </button>
-      </div>
+      {user && <PostForm onPost={addPost} />}
 
       {selectedCategory && (
         <div style={{ marginBottom: "10px" }}>

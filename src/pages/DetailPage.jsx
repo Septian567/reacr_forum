@@ -10,7 +10,6 @@ import "../styles/postList.css";
 import "../styles/CommentForm.css";
 import "../styles/CommentList.css";
 
-// Komponen ProfilePhoto
 const ProfilePhoto = ({ username, getPhoto }) => (
   <div className="profile-wrapper">
     <img
@@ -21,7 +20,6 @@ const ProfilePhoto = ({ username, getPhoto }) => (
   </div>
 );
 
-// Komponen PostActions
 const PostActions = ({
   comments,
   upvotes,
@@ -55,7 +53,6 @@ const PostActions = ({
   </div>
 );
 
-// Komentar
 const CommentForm = ({ author, comment, setComment, onSubmit, getPhoto }) => (
   <div className="comment-form">
     <ProfilePhoto username={author} getPhoto={getPhoto} />
@@ -71,7 +68,6 @@ const CommentForm = ({ author, comment, setComment, onSubmit, getPhoto }) => (
   </div>
 );
 
-// Daftar komentar
 const CommentList = ({ comments, onVote, getPhoto }) => (
   <div className="comment-list">
     <h4>{comments.length} Komentar:</h4>
@@ -103,7 +99,6 @@ const CommentList = ({ comments, onVote, getPhoto }) => (
   </div>
 );
 
-// Postingan utama
 const PostItem = ({ post, onVote, getPhoto }) => (
   <div className="post-item">
     <ProfilePhoto username={post.owner.name} getPhoto={getPhoto} />
@@ -128,7 +123,6 @@ const PostItem = ({ post, onVote, getPhoto }) => (
   </div>
 );
 
-// Halaman detail utama
 const DetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -136,12 +130,15 @@ const DetailPage = () => {
   const [thread, setThread] = useState(null);
   const [comment, setComment] = useState("");
   const [users, setUsers] = useState([]);
+  const [user, setUser] = useState(null); // Tambahan
 
-  // Ambil thread dan user
   useEffect(() => {
     api.getThreadDetail(id).then(setThread).catch(console.error);
-
     api.getAllUsers().then(setUsers).catch(console.error);
+    api
+      .getOwnProfile()
+      .then(setUser)
+      .catch(() => setUser(null)); // Ambil user login
   }, [id]);
 
   const getUserProfilePhoto = (username) => {
@@ -205,13 +202,15 @@ const DetailPage = () => {
         onVote={handleVotePost}
         getPhoto={getUserProfilePhoto}
       />
-      <CommentForm
-        author={thread.owner.name}
-        comment={comment}
-        setComment={setComment}
-        onSubmit={handleAddComment}
-        getPhoto={getUserProfilePhoto}
-      />
+      {user && (
+        <CommentForm
+          author={thread.owner.name}
+          comment={comment}
+          setComment={setComment}
+          onSubmit={handleAddComment}
+          getPhoto={getUserProfilePhoto}
+        />
+      )}
       <CommentList
         comments={thread.comments}
         onVote={handleVoteComment}

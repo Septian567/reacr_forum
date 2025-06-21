@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
+import LoadingBar from "react-top-loading-bar";
 
 // Cache system dengan TTL 5 menit
 const leaderboardCache = {
@@ -19,6 +20,7 @@ const leaderboardCache = {
 
 const Leaderboard = () => {
   const navigate = useNavigate();
+  const [progress, setProgress] = useState(0); // Loading bar state
   const [currentUser, setCurrentUser] = useState(() => {
     const cachedUser = localStorage.getItem("cachedUser");
     return cachedUser ? JSON.parse(cachedUser) : { name: "", email: "" };
@@ -29,10 +31,13 @@ const Leaderboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setProgress(30); // Start loading
+
       // Load cached data first
       const cachedLeaderboard = leaderboardCache.get();
       if (cachedLeaderboard) {
         setLeaderboards(cachedLeaderboard);
+        setProgress(50);
       }
 
       try {
@@ -42,6 +47,8 @@ const Leaderboard = () => {
           currentUser.name ? Promise.resolve(null) : api.getOwnProfile(),
           cachedLeaderboard ? Promise.resolve(null) : api.getLeaderboards(),
         ]);
+
+        setProgress(70);
 
         // Update user data jika diperlukan
         if (userData) {
@@ -54,8 +61,11 @@ const Leaderboard = () => {
           leaderboardCache.set(leaderboardData);
           setLeaderboards(leaderboardData);
         }
+
+        setProgress(100);
       } catch (error) {
         console.error("Failed to fetch data:", error);
+        setProgress(100); // Complete even on error
       } finally {
         setIsInitialLoad(false);
         setIsUserLoading(false);
@@ -69,6 +79,11 @@ const Leaderboard = () => {
   if (isInitialLoad) {
     return (
       <div className="column center main-grid">
+        <LoadingBar
+          color="#f11946"
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
         {/* Header Skeleton */}
         <div
           style={{
@@ -181,6 +196,11 @@ const Leaderboard = () => {
 
   return (
     <div className="column center main-grid">
+      <LoadingBar
+        color="#f11946"
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
       {/* Header */}
       <div
         style={{

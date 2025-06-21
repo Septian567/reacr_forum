@@ -209,6 +209,7 @@ export const PostProvider = ({ children }) => {
     }
   };
 
+
   const deleteAllPosts = () => {
     if (window.confirm("Hapus semua postingan lokal?")) {
       setPosts([]);
@@ -216,10 +217,19 @@ export const PostProvider = ({ children }) => {
     }
   };
 
+  const updatePostData = (updatedPost) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === updatedPost.id ? { ...post, ...updatedPost } : post
+      )
+    );
+  };
+
   return (
     <PostContext.Provider
       value={{
         posts,
+        updatePostData,
         filteredPosts,
         comments,
         addPost,

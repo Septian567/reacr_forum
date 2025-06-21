@@ -37,7 +37,6 @@ TODO 18 Juni 2025
 - perbaiki icon comment -- SUCCESS
 - pasang fitur comment api -- SUCCESS
 - pasang vitur votes comment api -- SUCCESS
-- sinkronkan jumlah komentar di mainPage dan detailPage
 
 2. hubungkan Leaderboard ke API
 - tampilkan nama user dan email user -- SUCCESS
@@ -53,3 +52,12 @@ TODO 20 Juni 2025
 
 
 - Refactoring ke redux
+- pasang loading bar 
+- sinkronkan jumlah komentar di mainPage -- SUCCESS
+
+TODO 21 Juni 2025
+1. memasang loading bar saat api memuat data
+- loading bar detailPage -- SUCCESS
+- loading bar leaderboard -- SUCCESS
+- loading bar userAccount (belum login) -- SUCCESS
+- loading bar mainPage (belum login dan sudah login) -- SUCCESS

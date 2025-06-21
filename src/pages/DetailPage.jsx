@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { usePostContext } from "../contexts/PostContext";
 import api from "../utils/api";
 import PostHeader from "../components/PostHeader";
 import { formatDate } from "../utils/dateFormatter";
 import { MessageCircle, ThumbsUp, ThumbsDown } from "react-feather";
 import DOMPurify from "dompurify";
+import LoadingBar from "react-top-loading-bar";
 import "../styles/detailPage.css";
 import "../styles/postList.css";
 import "../styles/CommentForm.css";
@@ -126,19 +128,54 @@ const PostItem = ({ post, onVote, getPhoto }) => (
 const DetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { updatePostData } = usePostContext();
 
+  const [progress, setProgress] = useState(0);
   const [thread, setThread] = useState(null);
   const [comment, setComment] = useState("");
   const [users, setUsers] = useState([]);
-  const [user, setUser] = useState(null); // Tambahan
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    api.getThreadDetail(id).then(setThread).catch(console.error);
-    api.getAllUsers().then(setUsers).catch(console.error);
-    api
-      .getOwnProfile()
-      .then(setUser)
-      .catch(() => setUser(null)); // Ambil user login
+    setProgress(30);
+
+    const fetchData = async () => {
+      try {
+        const [threadData, usersData] = await Promise.all([
+          api.getThreadDetail(id),
+          api.getAllUsers(),
+        ]);
+
+        setThread(threadData);
+        setUsers(usersData);
+        setProgress(70);
+
+        try {
+          const profile = await api.getOwnProfile();
+          setUser(profile);
+        } catch (profileError) {
+          setUser(null);
+        }
+
+        setProgress(100);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+        setProgress(100);
+      }
+    };
+
+    fetchData();
+
+    // Tambahkan event listener untuk logout
+    const handleLogoutEvent = () => {
+      setUser(null); // Ini akan menyembunyikan form komentar
+    };
+
+    window.addEventListener("userLoggedOut", handleLogoutEvent);
+
+    return () => {
+      window.removeEventListener("userLoggedOut", handleLogoutEvent);
+    };
   }, [id]);
 
   const getUserProfilePhoto = (username) => {
@@ -148,16 +185,32 @@ const DetailPage = () => {
 
   const handleAddComment = () => {
     if (comment.trim()) {
+      setProgress(30);
       api
         .createComment({ threadId: id, content: comment })
-        .then(() => api.getThreadDetail(id))
-        .then(setThread)
-        .catch(console.error);
+        .then(() => {
+          setProgress(70);
+          return api.getThreadDetail(id);
+        })
+        .then((updatedThread) => {
+          setThread(updatedThread);
+          updatePostData({
+            id,
+            comments: updatedThread.comments,
+            totalComments: updatedThread.comments.length,
+          });
+          setProgress(100);
+        })
+        .catch((error) => {
+          console.error(error);
+          setProgress(100);
+        });
       setComment("");
     }
   };
 
   const handleVotePost = (type) => {
+    setProgress(30);
     const voteFn = {
       up: api.upVoteThread,
       down: api.downVoteThread,
@@ -165,13 +218,28 @@ const DetailPage = () => {
 
     if (voteFn) {
       voteFn(id)
-        .then(() => api.getThreadDetail(id))
-        .then(setThread)
-        .catch(console.error);
+        .then(() => {
+          setProgress(70);
+          return api.getThreadDetail(id);
+        })
+        .then((updatedThread) => {
+          setThread(updatedThread);
+          updatePostData({
+            id,
+            upVotesBy: updatedThread.upVotesBy,
+            downVotesBy: updatedThread.downVotesBy,
+          });
+          setProgress(100);
+        })
+        .catch((error) => {
+          console.error(error);
+          setProgress(100);
+        });
     }
   };
 
   const handleVoteComment = (commentId, type) => {
+    setProgress(30);
     const voteFn = {
       up: api.upVoteComment,
       down: api.downVoteComment,
@@ -179,15 +247,33 @@ const DetailPage = () => {
 
     if (voteFn) {
       voteFn({ threadId: id, commentId })
-        .then(() => api.getThreadDetail(id))
-        .then(setThread)
-        .catch(console.error);
+        .then(() => {
+          setProgress(70);
+          return api.getThreadDetail(id);
+        })
+        .then((updatedThread) => {
+          setThread(updatedThread);
+          updatePostData({
+            id,
+            comments: updatedThread.comments,
+          });
+          setProgress(100);
+        })
+        .catch((error) => {
+          console.error(error);
+          setProgress(100);
+        });
     }
   };
 
   if (!thread) {
     return (
       <div className="column center main-grid detail-page-container">
+        <LoadingBar
+          color="#f11946"
+          progress={progress}
+          onLoaderFinished={() => setProgress(0)}
+        />
         <PostHeader onBack={() => navigate(-1)} author="" />
         <p>Memuat detail postingan...</p>
       </div>
@@ -196,26 +282,35 @@ const DetailPage = () => {
 
   return (
     <div className="column center main-grid detail-page-container">
-      <PostHeader onBack={() => navigate(-1)} author={thread.owner.name} />
-      <PostItem
-        post={thread}
-        onVote={handleVotePost}
-        getPhoto={getUserProfilePhoto}
+      <LoadingBar
+        color="#f11946"
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
       />
-      {user && (
-        <CommentForm
-          author={thread.owner.name}
-          comment={comment}
-          setComment={setComment}
-          onSubmit={handleAddComment}
-          getPhoto={getUserProfilePhoto}
-        />
+      <PostHeader onBack={() => navigate(-1)} author={thread?.owner?.name} />
+      {thread && (
+        <>
+          <PostItem
+            post={thread}
+            onVote={handleVotePost}
+            getPhoto={getUserProfilePhoto}
+          />
+          {user && (
+            <CommentForm
+              author={thread.owner.name}
+              comment={comment}
+              setComment={setComment}
+              onSubmit={handleAddComment}
+              getPhoto={getUserProfilePhoto}
+            />
+          )}
+          <CommentList
+            comments={thread.comments}
+            onVote={handleVoteComment}
+            getPhoto={getUserProfilePhoto}
+          />
+        </>
       )}
-      <CommentList
-        comments={thread.comments}
-        onVote={handleVoteComment}
-        getPhoto={getUserProfilePhoto}
-      />
     </div>
   );
 };

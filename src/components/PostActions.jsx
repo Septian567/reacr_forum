@@ -1,12 +1,20 @@
 import React from "react";
 import { MessageCircle, ThumbsUp, ThumbsDown } from "react-feather";
 
-const PostActions = ({ comments, upvotes, downvotes, onVote }) => (
+const PostActions = ({
+  comments,
+  upvotes,
+  downvotes,
+  onVote,
+  showComments = true,
+}) => (
   <div className="post-actions">
-    <div className="action-item">
-      <MessageCircle size={16} />
-      <span>{comments}</span>
-    </div>
+    {showComments && comments !== undefined && (
+      <div className="action-item">
+        <MessageCircle size={16} />
+        <span>{comments}</span>
+      </div>
+    )}
     <div
       className="action-item"
       onClick={() => onVote("up")}

@@ -1,0 +1,94 @@
+.post-form.input-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 15px;
+  }
+  
+  .profile-wrapper {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .profile-photo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .circle-icon {
+    background-color: greenyellow;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #555;
+  }
+  
+  
+  .form-fields {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .category-input,
+  .content-input, .title-input {
+    width: 100%;
+    border: 1px solid #ccc;
+    padding: 8px;
+    font-family: inherit;
+    font-size: 1rem;
+    border-radius: 6px;
+    background: white;
+  }
+  
+  .content-input {
+    resize: vertical;
+    min-height: 60px;
+  }
+  
+  .submit-action {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .submit-btn {
+    background-color: #3a86ff;
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 18px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s ease;
+  }
+  
+  .submit-btn:hover {
+    background-color: #2a76ef;
+  }
+  
+  .btn-icon {
+    display: none;
+  }
+  
+  .btn-text {
+    display: inline;
+  }
+  
+
+  /* Untuk memaksa teks panjang turun ke bawah */
+.ql-editor {
+  word-break: break-word;
+  white-space: pre-wrap;
+}

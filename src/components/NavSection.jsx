@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+// src/components/NavSection.jsx
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   MessageSquare,
@@ -11,9 +12,11 @@ import {
 } from "react-feather";
 import "../styles/NavSection.css";
 import "../styles/postModal.css";
-import { usePostContext } from "../contexts/PostContext";
-import api from "../utils/api";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserProfile, logout } from "../features/auth/authSlice";
+import { addNewPost } from "../features/posts/postSlice";
 
+// --- Modal Posting ---
 const PostModal = ({
   postTitle,
   setPostTitle,
@@ -109,39 +112,30 @@ const PostModal = ({
   </div>
 );
 
+// --- Komponen Utama ---
 const NavSection = () => {
   const [showModal, setShowModal] = useState(false);
   const [postTitle, setPostTitle] = useState("");
   const [postContent, setPostContent] = useState("");
   const [category, setCategory] = useState("");
-  const [user, setUser] = useState(null);
 
-  const { addPost } = usePostContext();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const refreshUser = async () => {
-    try {
-      const profile = await api.getOwnProfile();
-      setUser(profile);
-    } catch (err) {
-      setUser(null);
-    }
-  };
+  const user = useSelector((state) => state.auth.user);
 
   useEffect(() => {
-    refreshUser();
-  }, []);
+    dispatch(fetchUserProfile());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!user) {
+      setShowModal(false);
+    }
+  }, [user]);
 
   const handleLogout = () => {
-    api.removeAccessToken();
-
-    // Tampilkan status logout (opsional)
-    setTimeout(() => {
-      setUser(null); // Update tampilan ke mode belum login
-      window.dispatchEvent(new Event("userLoggedOut")); // Beritahu komponen lain
-    }, 1000); // 2 detik delay
+    dispatch(logout());
   };
-  
 
   const handlePost = async () => {
     if (!postTitle.trim() || !postContent.trim()) {
@@ -150,19 +144,21 @@ const NavSection = () => {
     }
 
     try {
-      await addPost({
-        title: postTitle,
-        body: postContent,
-        category: category || "umum",
-        user,
-      });
+      await dispatch(
+        addNewPost({
+          title: postTitle,
+          body: postContent,
+          category: category || "umum",
+          user,
+        })
+      ).unwrap();
 
       setPostTitle("");
       setPostContent("");
       setCategory("");
       setShowModal(false);
     } catch (err) {
-      alert("Gagal membuat postingan: " + err.message);
+      alert("Gagal membuat postingan: " + err);
     }
   };
 
@@ -189,10 +185,14 @@ const NavSection = () => {
             <span className="nav-text">Logout</span>
           </div>
         ) : (
-          <Link to="/login" className="nav-item">
+          <div
+            className="nav-item"
+            onClick={() => navigate("/login")}
+            style={{ cursor: "pointer" }}
+          >
             <LogIn size={20} className="nav-icon" />
             <span className="nav-text">Login</span>
-          </Link>
+          </div>
         )}
 
         {user && (

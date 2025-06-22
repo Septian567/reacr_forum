@@ -1,0 +1,43 @@
+.profile-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* Tambahkan class untuk alignment kiri */
+.profile-wrapper.align-left {
+  justify-content: flex-start;
+  margin-right: 8px; /* Memberi jarak dengan elemen sebelahnya */
+}
+
+.profile-photo {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Size variations */
+.profile-wrapper.profile-photo-small {
+  width: 40px;
+}
+
+.profile-photo-small .profile-photo {
+  width: 32px;
+  height: 32px;
+}
+
+.profile-wrapper.profile-photo-medium {
+  width: 50px;
+}
+
+.profile-photo-medium .profile-photo {
+  width: 40px;
+  height: 40px;
+}
+
+.profile-wrapper.profile-photo-large {
+  width: 70px;
+}
+
+.profile-photo-large .profile-photo {
+  width: 60px;
+  height: 60px;
+}

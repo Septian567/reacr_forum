@@ -1,39 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import api from "../utils/api"; // Pastikan path sesuai struktur proyek kamu
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser, resetLoginState } from "../features/auth/authSlice";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState(""); // ⬅️ ganti jadi email
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const { status, error, user } = useSelector((state) => state.auth);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!email || !password) {
       alert("Mohon isi semua kolom!");
       return;
     }
 
-    try {
-      setLoading(true);
-      const token = await api.login({ email, password }); // ⬅️ login via API
-      api.putAccessToken(token); // ⬅️ simpan token ke localStorage
-
-      const profile = await api.getOwnProfile(); // opsional: ambil data user
-      console.log("Logged in as:", profile);
-
-      navigate("/"); // ⬅️ redirect setelah login
-    } catch (error) {
-      alert(`Login gagal: ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
+    dispatch(loginUser({ email, password }));
   };
+
+  // Reset error saat pertama kali masuk halaman login
+  useEffect(() => {
+    dispatch(resetLoginState());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (status === "succeeded" && user) {
+      navigate("/");
+    }
+  }, [status, user, navigate]);
 
   return (
     <div style={styles.container}>
@@ -71,8 +72,26 @@ const LoginPage = () => {
           )}
         </div>
 
-        <button type="submit" style={styles.button} disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
+        {status === "failed" && error && (
+          <p
+            style={{
+              color: "red",
+              fontSize: "14px",
+              textAlign: "left",
+              marginTop: "-10px",
+              marginBottom: "10px",
+            }}
+          >
+            {error.includes("401") ? "Email atau password salah" : error}
+          </p>
+        )}
+
+        <button
+          type="submit"
+          style={styles.button}
+          disabled={status === "loading"}
+        >
+          {status === "loading" ? "Logging in..." : "Login"}
         </button>
       </form>
 

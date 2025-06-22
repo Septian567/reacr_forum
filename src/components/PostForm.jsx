@@ -1,27 +1,15 @@
-import React, { useEffect, useState } from "react";
-import { User as UserIcon } from "react-feather"; // Tambahkan ini
+import React, { useState } from "react";
+import { User as UserIcon } from "react-feather";
+import { useSelector } from "react-redux";
 import "../styles/postForm.css";
-import api from "../utils/api";
 
 const PostForm = ({ onPost }) => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const profile = await api.getOwnProfile();
-        setUser(profile);
-      } catch (error) {
-        console.error("Gagal mengambil profil pengguna:", error.message);
-      }
-    };
-
-    fetchUser();
-  }, []);
+  const user = useSelector((state) => state.auth.user);
 
   const handleSubmit = async () => {
     if (!title.trim() || !category.trim() || !content.trim()) {

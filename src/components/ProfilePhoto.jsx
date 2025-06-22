@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
-const ProfilePhoto = () => (
+const ProfilePhoto = ({ username, getPhoto }) => (
   <div className="profile-wrapper">
     <img
-      src="https://via.placeholder.com/40"
-      alt="Profile"
+      src={getPhoto(username)}
+      alt={`Foto profil ${username}`}
       className="profile-photo"
     />
   </div>

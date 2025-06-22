@@ -1,10 +1,19 @@
 import React from "react";
 import { Hash } from "react-feather";
 import "../styles/category-list.css";
-import { usePostContext } from "../contexts/PostContext"; // ⬅️ gunakan context
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectSelectedCategory,
+  setSelectedCategory,
+} from "../features/posts/postSlice";
 
 const CategoryList = ({ categories }) => {
-  const { selectedCategory, toggleCategoryFilter } = usePostContext();
+  const dispatch = useDispatch();
+  const selectedCategory = useSelector(selectSelectedCategory);
+
+  const handleToggle = (categoryName) => {
+    dispatch(setSelectedCategory(categoryName));
+  };
 
   return (
     <div className="categories-section">
@@ -16,7 +25,7 @@ const CategoryList = ({ categories }) => {
             <div
               key={index}
               className={`category-item ${isSelected ? "selected" : ""}`}
-              onClick={() => toggleCategoryFilter(category.name)}
+              onClick={() => handleToggle(category.name)}
               style={{ cursor: "pointer" }}
             >
               <div className="category-content">

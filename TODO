@@ -61,3 +61,8 @@ TODO 21 Juni 2025
 - loading bar leaderboard -- SUCCESS
 - loading bar userAccount (belum login) -- SUCCESS
 - loading bar mainPage (belum login dan sudah login) -- SUCCESS
+
+2. refactoring redux
+- buat placeholder loading untuk mainPage  -- SUCCESS
+- buat placeholder loading untuk detailPage
+- refactoring page ke dalam komponen dan redux

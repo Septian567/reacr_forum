@@ -2,56 +2,77 @@ import React, { useEffect, useState } from "react";
 import "../styles/columns.css";
 import PostForm from "../components/PostForm";
 import PostList from "../components/PostList";
-import { usePostContext } from "../contexts/PostContext";
-import api from "../utils/api";
 import LoadingBar from "react-top-loading-bar";
+import {useDispatch,useSelector} from "react-redux";
+import PostSkeleton from "../components/PostSkeleton";
+import { fetchUserProfile } from "../features/auth/authSlice";
+import {
+  fetchPostsAndUsers,
+  addNewPost,
+  votePost,
+  selectFilteredPosts,
+  selectSelectedCategory,
+} from "../features/posts/postSlice";
 
 const MainPage = () => {
-  const [user, setUser] = useState(null);
-  const [progress, setProgress] = useState(0); // State for loading bar
-  const { filteredPosts, addPost, votePost, selectedCategory } =
-    usePostContext();
+  const [progress, setProgress] = useState(0);
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.auth.user);
+  const posts = useSelector(selectFilteredPosts);
+  const selectedCategory = useSelector(selectSelectedCategory);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      setProgress(30); // Start loading
+    setProgress(30);
+
+    const loadData = async () => {
       try {
-        const profile = await api.getOwnProfile();
-        setUser(profile);
-        setProgress(100); // Complete loading
+        await dispatch(fetchUserProfile()).unwrap();
       } catch (err) {
-        console.warn("User belum login atau gagal fetch:", err.message);
-        setUser(null);
-        setProgress(100); // Complete even on error
+        console.warn("Tidak login, lewati ambil profil user:", err.message);
+      }
+
+      try {
+        await dispatch(fetchPostsAndUsers()).unwrap();
+      } catch (err) {
+        console.warn("Gagal ambil data post/user:", err.message);
+      } finally {
+        setProgress(100);
       }
     };
 
-    fetchUser();
+    loadData();
 
-    // 🔁 Tambahkan listener untuk logout event
     const handleLogout = () => {
-      setUser(null);
+      // Redux sudah handle state auth
     };
 
     window.addEventListener("userLoggedOut", handleLogout);
-
-    // Bersihkan listener saat komponen dibongkar
     return () => {
       window.removeEventListener("userLoggedOut", handleLogout);
-      setProgress(0); // Reset progress on unmount
+      setProgress(0);
     };
-  }, []);
+  }, [dispatch]);
+
+  const handleAddPost = (newPost) => {
+    dispatch(addNewPost(newPost));
+  };
+
+  const handleVote = (postId, type) => {
+    dispatch(votePost({ postId, type }));
+  };
 
   return (
     <div className="column center main-grid">
       <LoadingBar
-        color="#f11946" // Warna loading bar (bisa disesuaikan)
+        color="#f11946"
         progress={progress}
-        height={3} // Ketebalan loading bar
-        onLoaderFinished={() => setProgress(0)} // Reset ketika selesai
+        height={3}
+        onLoaderFinished={() => setProgress(0)}
       />
 
-      {user && <PostForm onPost={addPost} />}
+      {/* Tampilkan form hanya jika sudah login */}
+      {user && <PostForm onPost={handleAddPost} />}
 
       {selectedCategory && (
         <div style={{ marginBottom: "10px" }}>
@@ -59,7 +80,16 @@ const MainPage = () => {
         </div>
       )}
 
-      <PostList posts={filteredPosts} onVote={votePost} />
+      {/* Tampilkan PostList meskipun belum login */}
+      {posts && posts.length > 0 ? (
+        <PostList posts={posts} onVote={handleVote} />
+      ) : (
+        <>
+          {[...Array(3)].map((_, i) => (
+            <PostSkeleton key={i} />
+          ))}
+        </>
+      )}
     </div>
   );
 };

@@ -1,8 +1,9 @@
 import React from "react";
-import "../styles/CommentForm.css"; // pastikan path sesuai
+import ProfilePhoto from "./ProfilePhoto";
 
-const CommentForm = ({ author, comment, setComment, onSubmit }) => (
+const CommentForm = ({ author, comment, setComment, onSubmit, getPhoto }) => (
   <div className="comment-form">
+    <ProfilePhoto username={author} getPhoto={getPhoto} />
     <div className="form-wrapper">
       <div className="reply-label">Replying to @{author}</div>
       <textarea

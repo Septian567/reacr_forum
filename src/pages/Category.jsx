@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import SearchForm from "../components/SearchForm";
 import CategoryList from "../components/CategoryList";
-import { usePostContext } from "../contexts/PostContext";
+import { useSelector } from "react-redux";
+import { selectAllPosts } from "../features/posts/postSlice";
 
 const Category = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const { posts } = usePostContext(); // Ambil posts dari context
+  const posts = useSelector(selectAllPosts); // Ambil dari Redux store
 
   const categoryMap = posts.reduce((acc, post) => {
     const key = post.category;

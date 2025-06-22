@@ -4,12 +4,20 @@ import { useNavigate } from "react-router-dom";
 import PostDate from "./PostDate";
 import DOMPurify from "dompurify";
 import "../styles/postList.css";
+import { useDispatch, useSelector } from "react-redux";
+import { votePost, selectFilteredPosts } from "../features/posts/postSlice";
 
-const PostList = ({ posts, onVote }) => {
+const PostList = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const posts = useSelector(selectFilteredPosts);
 
   const handleNavigate = (id) => {
     navigate(`/post/${id}`);
+  };
+
+  const handleVote = (postId, type) => {
+    dispatch(votePost({ postId, type }));
   };
 
   return (
@@ -42,7 +50,6 @@ const PostList = ({ posts, onVote }) => {
             <h5 className="post-category">#{post.category}</h5>
 
             <div className="post-content-link">
-              {/* Render konten HTML secara aman */}
               <div
                 className="post-content"
                 dangerouslySetInnerHTML={{
@@ -54,14 +61,13 @@ const PostList = ({ posts, onVote }) => {
             <div className="post-actions">
               <div className="action-item" onClick={(e) => e.stopPropagation()}>
                 <MessageCircle size={16} />
-                <span>{post.comments?.length ?? 0}</span>{" "}
-                {/* Gunakan comments.length */}
+                <span>{post.totalComments ?? post.comments?.length ?? 0}</span>
               </div>
               <div
                 className="action-item"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onVote(post.id, "up");
+                  handleVote(post.id, "up");
                 }}
               >
                 <ThumbsUp size={16} />
@@ -71,7 +77,7 @@ const PostList = ({ posts, onVote }) => {
                 className="action-item"
                 onClick={(e) => {
                   e.stopPropagation();
-                  onVote(post.id, "down");
+                  handleVote(post.id, "down");
                 }}
               >
                 <ThumbsDown size={16} />

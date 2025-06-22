@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import api from "../utils/api"; // Pastikan path ini sesuai lokasi file api.js kamu
+import { useDispatch, useSelector } from "react-redux";
+import { registerUser, resetRegisterState } from "../features/auth/authSlice";
 
 const RegisterPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { registerLoading, isRegistered, error } = useSelector(
+    (state) => state.auth
+  );
 
   const [formData, setFormData] = useState({
     name: "",
@@ -17,13 +23,23 @@ const RegisterPage = () => {
   const [showConfirm, setShowConfirm] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [isConfirmFocused, setIsConfirmFocused] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (isRegistered) {
+      alert("Registrasi berhasil! Silakan login.");
+      dispatch(resetRegisterState());
+      navigate("/login");
+    }
+    if (error) {
+      alert(`Registrasi gagal: ${error}`);
+    }
+  }, [isRegistered, error, dispatch, navigate]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const { name, email, password, confirmPassword } = formData;
 
@@ -37,16 +53,7 @@ const RegisterPage = () => {
       return;
     }
 
-    try {
-      setIsLoading(true);
-      await api.register({ name, email, password });
-      alert("Registrasi berhasil! Silakan login.");
-      navigate("/login");
-    } catch (error) {
-      alert(`Registrasi gagal: ${error.message}`);
-    } finally {
-      setIsLoading(false);
-    }
+    dispatch(registerUser({ name, email, password }));
   };
 
   return (
@@ -71,7 +78,6 @@ const RegisterPage = () => {
           style={styles.input}
         />
 
-        {/* Password */}
         <div style={styles.passwordContainer}>
           <input
             type={showPassword ? "text" : "password"}
@@ -97,7 +103,6 @@ const RegisterPage = () => {
           )}
         </div>
 
-        {/* Confirm Password */}
         <div style={styles.passwordContainer}>
           <input
             type={showConfirm ? "text" : "password"}
@@ -123,8 +128,8 @@ const RegisterPage = () => {
           )}
         </div>
 
-        <button type="submit" style={styles.button} disabled={isLoading}>
-          {isLoading ? "Mendaftarkan..." : "Daftar"}
+        <button type="submit" style={styles.button} disabled={registerLoading}>
+          {registerLoading ? "Mendaftarkan..." : "Daftar"}
         </button>
 
         <div style={styles.footer}>

@@ -1,19 +1,10 @@
-import React from 'react';
-import { Hash } from 'react-feather';
-import '../styles/category-list.css';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  selectSelectedCategory,
-  setSelectedCategory,
-} from '../features/posts/postSlice';
+import React from "react";
+import { Hash } from "react-feather";
+import "../styles/category-list.css";
+import { useCategory } from "../hooks/useCategory";
 
 const CategoryList = ({ categories }) => {
-  const dispatch = useDispatch();
-  const selectedCategory = useSelector(selectSelectedCategory);
-
-  const handleToggle = (categoryName) => {
-    dispatch(setSelectedCategory(categoryName));
-  };
+  const { selectedCategory, toggleCategory } = useCategory();
 
   return (
     <div className="categories-section">
@@ -24,9 +15,9 @@ const CategoryList = ({ categories }) => {
           return (
             <div
               key={index}
-              className={`category-item ${isSelected ? 'selected' : ''}`}
-              onClick={() => handleToggle(category.name)}
-              style={{ cursor: 'pointer' }}
+              className={`category-item ${isSelected ? "selected" : ""}`}
+              onClick={() => toggleCategory(category.name)}
+              style={{ cursor: "pointer" }}
             >
               <div className="category-content">
                 <Hash size={16} className="hashtag-icon" />

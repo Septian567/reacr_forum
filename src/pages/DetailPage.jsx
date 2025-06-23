@@ -1,86 +1,36 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import DetailSkeleton from '../components/DetailSkeleton';
-import PostHeader from '../components/PostHeader';
-import PostItem from '../components/PostItem';
-import CommentForm from '../components/CommentForm';
-import CommentList from '../components/CommentList';
-import LoadingBar from 'react-top-loading-bar';
+import React from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import useThreadDetail from "../hooks/useThreadDetail";
 
-import {
-  fetchThreadDetail,
-  fetchAllUsers,
-  voteThread,
-  voteComment,
-  createComment,
-} from '../features/thread/threadSlice';
+import DetailSkeleton from "../components/DetailSkeleton";
+import PostHeader from "../components/PostHeader";
+import PostItem from "../components/PostItem";
+import CommentForm from "../components/CommentForm";
+import CommentList from "../components/CommentList";
+import LoadingBar from "react-top-loading-bar";
 
-import api from '../utils/api';
-import '../styles/detailPage.css';
-import '../styles/postList.css';
-import '../styles/CommentForm.css';
-import '../styles/CommentList.css';
-// Main DetailPage Component
+import "../styles/detailPage.css";
+import "../styles/postList.css";
+import "../styles/CommentForm.css";
+import "../styles/CommentList.css";
+
 const DetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const [progress, setProgress] = useState(0);
-  const [comment, setComment] = useState('');
-  const [user, setUser] = useState(null);
 
   const {
-    threadDetail: thread,
-    users,
+    thread,
+    user,
     loading,
-  } = useSelector((state) => state.thread);
-
-  useEffect(() => {
-    setProgress(30);
-    dispatch(fetchThreadDetail(id));
-    dispatch(fetchAllUsers());
-
-    api
-      .getOwnProfile()
-      .then((profile) => setUser(profile))
-      .catch(() => setUser(null))
-      .finally(() => setProgress(100));
-
-    const handleLogoutEvent = () => setUser(null);
-    window.addEventListener('userLoggedOut', handleLogoutEvent);
-    return () => window.removeEventListener('userLoggedOut', handleLogoutEvent);
-  }, [id, dispatch]);
-
-  const getUserProfilePhoto = (username) => {
-    const found = users.find((u) => u.name === username);
-    return found?.avatar || 'https://via.placeholder.com/40';
-  };
-
-  const handleAddComment = () => {
-    if (comment.trim()) {
-      setProgress(30);
-      dispatch(createComment({ threadId: id, content: comment })).finally(
-        () => {
-          setProgress(100);
-          setComment('');
-        }
-      );
-    }
-  };
-
-  const handleVotePost = (type) => {
-    setProgress(30);
-    dispatch(voteThread({ id, type })).finally(() => setProgress(100));
-  };
-
-  const handleVoteComment = (commentId, type) => {
-    setProgress(30);
-    dispatch(voteComment({ threadId: id, commentId, type })).finally(() =>
-      setProgress(100)
-    );
-  };
+    progress,
+    comment,
+    setComment,
+    setProgress,
+    getUserProfilePhoto,
+    handleAddComment,
+    handleVotePost,
+    handleVoteComment,
+  } = useThreadDetail(id);
 
   if (loading || !thread) {
     return (

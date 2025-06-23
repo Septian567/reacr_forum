@@ -1,6 +1,6 @@
 import React from 'react';
 import { Search } from 'react-feather';
-import '../styles/search-form.css';
+import '../../styles/search-form.css';
 
 const SearchForm = ({ searchQuery, setSearchQuery }) => {
   return (

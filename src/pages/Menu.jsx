@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/left-column.css';
-import NavSection from '../components/NavSection';
-import UserProfile from '../components/UserProfile';
+import NavSection from '../components/menu/NavSection';
+import UserProfile from '../components/menu/UserProfile';
 
 const Menu = () => {
   return (

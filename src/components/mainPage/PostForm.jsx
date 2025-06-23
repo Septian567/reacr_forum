@@ -1,46 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { User as UserIcon } from 'react-feather';
-import { useSelector } from 'react-redux';
-import '../styles/postForm.css';
+import usePostForm from '../../hooks/usePostForm';
+import '../../styles/postForm.css';
 
 const PostForm = ({ onPost }) => {
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [content, setContent] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  const user = useSelector((state) => state.auth.user);
-
-  const handleSubmit = async () => {
-    if (!title.trim() || !category.trim() || !content.trim()) {
-      alert('Judul, kategori, dan konten tidak boleh kosong.');
-      return;
-    }
-
-    if (!user) {
-      alert('Data user belum siap. Coba lagi sebentar.');
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      await onPost({
-        title,
-        body: content,
-        category,
-        user,
-      });
-
-      setTitle('');
-      setCategory('');
-      setContent('');
-    } catch (error) {
-      alert(`Gagal membuat postingan: ${  error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const {
+    title,
+    category,
+    content,
+    loading,
+    user,
+    setTitle,
+    setCategory,
+    setContent,
+    handleSubmit,
+  } = usePostForm(onPost);
 
   return (
     <div className="post-form input-row">

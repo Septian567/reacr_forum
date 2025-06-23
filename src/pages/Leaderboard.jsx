@@ -1,12 +1,12 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import LoadingBar from "react-top-loading-bar";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import LoadingBar from 'react-top-loading-bar';
 
-import useLeaderboardData from "../hooks/useLeaderboardData";
-import HeaderUserInfo from "../components/HeaderUserInfo";
-import LeaderboardHeader from "../components/LeaderboardHeader";
-import LeaderboardRow from "../components/LeaderboardRow";
-import LeaderboardSkeletonRow from "../components/LeaderboardSkeletonRow";
+import useLeaderboardData from '../hooks/useLeaderboardData';
+import HeaderUserInfo from '../components/HeaderUserInfo';
+import LeaderboardHeader from '../components/LeaderboardHeader';
+import LeaderboardRow from '../components/LeaderboardRow';
+import LeaderboardSkeletonRow from '../components/LeaderboardSkeletonRow';
 
 const Leaderboard = () => {
   const navigate = useNavigate();
@@ -20,8 +20,8 @@ const Leaderboard = () => {
   } = useLeaderboardData();
 
   const isInitialLoad = isUserLoading || isLeaderboardLoading;
-  const displayName = currentUser?.name || "Anonim";
-  const displayEmail = currentUser?.email || "-";
+  const displayName = currentUser?.name || 'Anonim';
+  const displayEmail = currentUser?.email || '-';
 
   return (
     <div className="column center main-grid">
@@ -35,38 +35,38 @@ const Leaderboard = () => {
         isUserLoading={isUserLoading}
         displayName={displayName}
         displayEmail={displayEmail}
-        onBack={() => navigate("/")}
+        onBack={() => navigate('/')}
       />
 
-      <h2 style={{ marginBottom: "20px" }}>Klasemen Pengguna Aktif</h2>
+      <h2 style={{ marginBottom: '20px' }}>Klasemen Pengguna Aktif</h2>
 
       <LeaderboardHeader />
 
       <ul
         style={{
-          listStyle: "none",
+          listStyle: 'none',
           padding: 0,
-          marginTop: "10px",
-          width: "100%",
+          marginTop: '10px',
+          width: '100%',
         }}
       >
         {isInitialLoad
           ? [...Array(5)].map((_, index) => (
-              <LeaderboardSkeletonRow key={index} />
-            ))
+            <LeaderboardSkeletonRow key={index} />
+          ))
           : leaderboards.map((leaderboard, index) => {
-              const isCurrentUser =
+            const isCurrentUser =
                 currentUser?.id && leaderboard.user.id === currentUser.id;
 
-              return (
-                <LeaderboardRow
-                  key={leaderboard.user.id}
-                  leaderboard={leaderboard}
-                  index={index}
-                  isCurrentUser={isCurrentUser}
-                />
-              );
-            })}
+            return (
+              <LeaderboardRow
+                key={leaderboard.user.id}
+                leaderboard={leaderboard}
+                index={index}
+                isCurrentUser={isCurrentUser}
+              />
+            );
+          })}
       </ul>
     </div>
   );

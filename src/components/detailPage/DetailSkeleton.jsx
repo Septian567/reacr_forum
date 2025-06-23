@@ -1,13 +1,15 @@
-// components/PostSkeleton.jsx
 import React from 'react';
-import '../styles/postSkeleton.css';
+import '../../styles/postSkeleton.css';
 
-const PostSkeleton = () => {
+const DetailSkeleton = () => {
   return (
-    <div className="post-skeleton">
+    <div className="post-skeleton detail-skeleton">
       <div className="skeleton-avatar" />
       <div className="skeleton-content">
         <div className="skeleton-line short" />
+        <div className="skeleton-line" />
+        <div className="skeleton-line" />
+        <div className="skeleton-line" />
         <div className="skeleton-line" />
         <div className="skeleton-line" />
         <div className="skeleton-actions">
@@ -20,4 +22,4 @@ const PostSkeleton = () => {
   );
 };
 
-export default PostSkeleton;
+export default DetailSkeleton;

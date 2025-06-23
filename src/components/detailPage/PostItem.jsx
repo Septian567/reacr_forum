@@ -2,7 +2,7 @@ import React from 'react';
 import DOMPurify from 'dompurify';
 import ProfilePhoto from './ProfilePhoto';
 import PostActions from './PostActions';
-import { formatDate } from '../utils/dateFormatter';
+import { formatDate } from '../../utils/dateFormatter';
 
 const PostItem = ({ post, onVote, getPhoto }) => (
   <div className="post-item">

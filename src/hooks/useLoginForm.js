@@ -1,15 +1,15 @@
 // src/hooks/useLoginForm.js
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser, resetLoginState } from "../features/auth/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, resetLoginState } from '../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const useLoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
 
@@ -18,7 +18,7 @@ const useLoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email || !password) {
-      alert("Mohon isi semua kolom!");
+      alert('Mohon isi semua kolom!');
       return;
     }
     dispatch(loginUser({ email, password }));
@@ -29,8 +29,8 @@ const useLoginForm = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (status === "succeeded" && user) {
-      navigate("/");
+    if (status === 'succeeded' && user) {
+      navigate('/');
     }
   }, [status, user, navigate]);
 

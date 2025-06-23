@@ -1,9 +1,9 @@
 // src/hooks/useCategory.js
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from 'react-redux';
 import {
   selectSelectedCategory,
   setSelectedCategory,
-} from "../features/posts/postSlice";
+} from '../features/posts/postSlice';
 
 export const useCategory = () => {
   const dispatch = useDispatch();

@@ -1,8 +1,8 @@
 // src/components/LoginForm.jsx
-import React from "react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
-import "../styles/LoginForm.css";
+import React from 'react';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
+import '../../styles/LoginForm.css';
 
 const LoginForm = ({
   email,
@@ -31,7 +31,7 @@ const LoginForm = ({
 
       <div className="password-container">
         <input
-          type={showPassword ? "text" : "password"}
+          type={showPassword ? 'text' : 'password'}
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -53,24 +53,24 @@ const LoginForm = ({
         )}
       </div>
 
-      {status === "failed" && error && (
+      {status === 'failed' && error && (
         <p className="error-text">
-          {error.includes("401") ? "Email atau password salah" : error}
+          {error.includes('401') ? 'Email atau password salah' : error}
         </p>
       )}
 
       <button
         type="submit"
         className="login-button"
-        disabled={status === "loading"}
+        disabled={status === 'loading'}
       >
-        {status === "loading" ? "Logging in..." : "Login"}
+        {status === 'loading' ? 'Logging in...' : 'Login'}
       </button>
 
       <div className="register-container">
         <span>Belum punya akun?</span>
         <button
-          onClick={() => navigate("/register")}
+          onClick={() => navigate('/register')}
           className="register-button"
           type="button"
         >

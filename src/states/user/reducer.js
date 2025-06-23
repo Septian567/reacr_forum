@@ -1,17 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../../utils/api';
-import { logout } from '../auth/authSlice'; // <-- import logout
-
-export const fetchUserProfile = createAsyncThunk(
-  'user/fetchUserProfile',
-  async (_, { rejectWithValue }) => {
-    try {
-      return await api.getOwnProfile();
-    } catch (error) {
-      return rejectWithValue(error.message || 'Gagal memuat profil');
-    }
-  }
-);
+// src/features/user/reducer.js
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchUserProfile } from './action';
+import { logout } from '../auth/reducer'; // pastikan ini sesuai path ekspor logout
 
 const userSlice = createSlice({
   name: 'user',
@@ -36,7 +26,6 @@ const userSlice = createSlice({
         state.profile = null;
         state.error = action.payload;
       })
-      // ⬇️ Tambahkan ini agar profile dihapus saat logout
       .addCase(logout, (state) => {
         state.profile = null;
         state.loading = false;

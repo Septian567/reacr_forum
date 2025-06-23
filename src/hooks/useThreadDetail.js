@@ -1,20 +1,20 @@
 // hooks/useThreadDetail.js
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchThreadDetail,
   fetchAllUsers,
   voteThread,
   voteComment,
   createComment,
-} from "../features/thread/threadSlice";
-import api from "../utils/api";
+} from '../features/thread/threadSlice';
+import api from '../utils/api';
 
 const useThreadDetail = (id) => {
   const dispatch = useDispatch();
 
   const [progress, setProgress] = useState(0);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
   const [user, setUser] = useState(null);
 
   const {
@@ -35,13 +35,13 @@ const useThreadDetail = (id) => {
       .finally(() => setProgress(100));
 
     const handleLogoutEvent = () => setUser(null);
-    window.addEventListener("userLoggedOut", handleLogoutEvent);
-    return () => window.removeEventListener("userLoggedOut", handleLogoutEvent);
+    window.addEventListener('userLoggedOut', handleLogoutEvent);
+    return () => window.removeEventListener('userLoggedOut', handleLogoutEvent);
   }, [id, dispatch]);
 
   const getUserProfilePhoto = (username) => {
     const found = users.find((u) => u.name === username);
-    return found?.avatar || "https://via.placeholder.com/40";
+    return found?.avatar || 'https://via.placeholder.com/40';
   };
 
   const handleAddComment = () => {
@@ -50,7 +50,7 @@ const useThreadDetail = (id) => {
       dispatch(createComment({ threadId: id, content: comment })).finally(
         () => {
           setProgress(100);
-          setComment("");
+          setComment('');
         }
       );
     }

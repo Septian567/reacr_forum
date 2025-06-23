@@ -1,60 +1,24 @@
-import React, { useEffect, useState } from 'react';
+// src/pages/RegisterPage.jsx
+import React from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { registerUser, resetRegisterState } from '../features/auth/authSlice';
+import useRegisterForm from '../hooks/useRegisterForm';
 
 const RegisterPage = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const { registerLoading, isRegistered, error } = useSelector(
-    (state) => state.auth
-  );
-
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
-
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
-  const [isConfirmFocused, setIsConfirmFocused] = useState(false);
-
-  useEffect(() => {
-    if (isRegistered) {
-      alert('Registrasi berhasil! Silakan login.');
-      dispatch(resetRegisterState());
-      navigate('/login');
-    }
-    if (error) {
-      alert(`Registrasi gagal: ${error}`);
-    }
-  }, [isRegistered, error, dispatch, navigate]);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const { name, email, password, confirmPassword } = formData;
-
-    if (!name || !email || !password || !confirmPassword) {
-      alert('Mohon isi semua kolom!');
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      alert('Password dan konfirmasi tidak cocok!');
-      return;
-    }
-
-    dispatch(registerUser({ name, email, password }));
-  };
+  const {
+    formData,
+    handleChange,
+    handleSubmit,
+    showPassword,
+    setShowPassword,
+    showConfirm,
+    setShowConfirm,
+    isPasswordFocused,
+    setIsPasswordFocused,
+    isConfirmFocused,
+    setIsConfirmFocused,
+    registerLoading,
+    navigate,
+  } = useRegisterForm();
 
   return (
     <div style={styles.container}>

@@ -1,18 +1,18 @@
-import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import useThreadDetail from "../hooks/useThreadDetail";
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import useThreadDetail from '../hooks/useThreadDetail';
 
-import DetailSkeleton from "../components/DetailSkeleton";
-import PostHeader from "../components/PostHeader";
-import PostItem from "../components/PostItem";
-import CommentForm from "../components/CommentForm";
-import CommentList from "../components/CommentList";
-import LoadingBar from "react-top-loading-bar";
+import DetailSkeleton from '../components/detailPage/DetailSkeleton';
+import PostHeader from '../components/detailPage/PostHeader';
+import PostItem from '../components/detailPage/PostItem';
+import CommentForm from '../components/detailPage/CommentForm';
+import CommentList from '../components/detailPage/CommentList';
+import LoadingBar from 'react-top-loading-bar';
 
-import "../styles/detailPage.css";
-import "../styles/postList.css";
-import "../styles/CommentForm.css";
-import "../styles/CommentList.css";
+import '../styles/detailPage.css';
+import '../styles/postList.css';
+import '../styles/CommentForm.css';
+import '../styles/CommentList.css';
 
 const DetailPage = () => {
   const { id } = useParams();

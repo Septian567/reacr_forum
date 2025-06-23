@@ -1,8 +1,8 @@
 // hooks/useLeaderboardData.js
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchLeaderboardData } from "../features/leaderboard/leaderboardSlice";
-import { fetchUserProfile } from "../features/user/userSlice";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchLeaderboardData } from '../features/leaderboard/leaderboardSlice';
+import { fetchUserProfile } from '../features/user/userSlice';
 
 const useLeaderboardData = () => {
   const dispatch = useDispatch();

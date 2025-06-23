@@ -1,12 +1,11 @@
-// contexts/PostContext.js
 import React, {
   createContext,
   useContext,
   useEffect,
   useState,
   useMemo,
-} from "react";
-import api from "../utils/api";
+} from 'react';
+import api from '../utils/api';
 
 const PostContext = createContext();
 
@@ -27,8 +26,8 @@ export const PostProvider = ({ children }) => {
     const owner = users[thread.ownerId];
     return {
       ...thread,
-      author: owner?.name || "Anonim",
-      avatar: owner?.avatar || "https://via.placeholder.com/40",
+      author: owner?.name || 'Anonim',
+      avatar: owner?.avatar || 'https://via.placeholder.com/40',
       totalComments: thread.comments?.length || 0, // Pastikan ini menggunakan length
       upVotesBy: thread.upVotesBy || [],
       downVotesBy: thread.downVotesBy || [],
@@ -68,7 +67,7 @@ export const PostProvider = ({ children }) => {
 
         setPosts(enrichedWithDetails);
       } catch (err) {
-        console.error("Gagal mengambil data:", err.message);
+        console.error('Gagal mengambil data:', err.message);
       } finally {
         setIsLoading(false);
       }
@@ -94,8 +93,8 @@ export const PostProvider = ({ children }) => {
 
       const enrichedThread = {
         ...rawThread,
-        author: newPost.user?.name || "Anonim",
-        avatar: newPost.user?.avatar || "https://via.placeholder.com/40",
+        author: newPost.user?.name || 'Anonim',
+        avatar: newPost.user?.avatar || 'https://via.placeholder.com/40',
         totalComments: rawThread.comments?.length || 0,
         upvotes: rawThread.upVotesBy?.length || 0,
         downvotes: rawThread.downVotesBy?.length || 0,
@@ -103,7 +102,7 @@ export const PostProvider = ({ children }) => {
 
       setPosts((prev) => [enrichedThread, ...prev]);
     } catch (error) {
-      console.error("Gagal menambah thread:", error.message);
+      console.error('Gagal menambah thread:', error.message);
       throw error;
     }
   };
@@ -112,9 +111,9 @@ export const PostProvider = ({ children }) => {
     try {
       const currentPost = posts.find((post) => post.id === postId);
 
-      if (type === "up") {
+      if (type === 'up') {
         await api.upVoteThread(postId);
-      } else if (type === "down") {
+      } else if (type === 'down') {
         await api.downVoteThread(postId);
       } else {
         await api.neutralizeVoteThread(postId);
@@ -125,11 +124,11 @@ export const PostProvider = ({ children }) => {
       const enriched = {
         ...updated,
         author:
-          currentPost?.author || usersMap[updated.ownerId]?.name || "Anonim",
+          currentPost?.author || usersMap[updated.ownerId]?.name || 'Anonim',
         avatar:
           currentPost?.avatar ||
           usersMap[updated.ownerId]?.avatar ||
-          "https://via.placeholder.com/40",
+          'https://via.placeholder.com/40',
         totalComments: updated.comments?.length || 0,
         upvotes: updated.upVotesBy?.length || 0,
         downvotes: updated.downVotesBy?.length || 0,
@@ -139,7 +138,7 @@ export const PostProvider = ({ children }) => {
         prev.map((post) => (post.id === postId ? enriched : post))
       );
     } catch (error) {
-      console.error("Gagal voting:", error.message);
+      console.error('Gagal voting:', error.message);
       throw error;
     }
   };
@@ -159,14 +158,14 @@ export const PostProvider = ({ children }) => {
         prev.map((post) =>
           post.id === postId
             ? {
-                ...post,
-                totalComments: (post.totalComments ?? 0) + 1,
-              }
+              ...post,
+              totalComments: (post.totalComments ?? 0) + 1,
+            }
             : post
         )
       );
     } catch (err) {
-      console.error("Gagal menambah komentar:", err.message);
+      console.error('Gagal menambah komentar:', err.message);
       throw err;
     }
   };
@@ -175,9 +174,9 @@ export const PostProvider = ({ children }) => {
     try {
       const currentPost = posts.find((post) => post.id === postId);
 
-      if (type === "up") {
+      if (type === 'up') {
         await api.upVoteComment({ threadId: postId, commentId });
-      } else if (type === "down") {
+      } else if (type === 'down') {
         await api.downVoteComment({ threadId: postId, commentId });
       } else {
         await api.neutralizeVoteComment({ threadId: postId, commentId });
@@ -190,11 +189,11 @@ export const PostProvider = ({ children }) => {
         author:
           currentPost?.author ||
           usersMap[updatedThread.ownerId]?.name ||
-          "Anonim",
+          'Anonim',
         avatar:
           currentPost?.avatar ||
           usersMap[updatedThread.ownerId]?.avatar ||
-          "https://via.placeholder.com/40",
+          'https://via.placeholder.com/40',
         totalComments: updatedThread.comments?.length || 0,
         upvotes: updatedThread.upVotesBy?.length || 0,
         downvotes: updatedThread.downVotesBy?.length || 0,
@@ -204,13 +203,13 @@ export const PostProvider = ({ children }) => {
         prev.map((post) => (post.id === postId ? enriched : post))
       );
     } catch (err) {
-      console.error("Gagal vote komentar:", err.message);
+      console.error('Gagal vote komentar:', err.message);
       throw err;
     }
   };
 
   const deleteAllPosts = () => {
-    if (window.confirm("Hapus semua postingan lokal?")) {
+    if (window.confirm('Hapus semua postingan lokal?')) {
       setPosts([]);
       setComments({});
     }

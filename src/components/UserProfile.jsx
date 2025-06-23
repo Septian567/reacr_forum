@@ -1,7 +1,7 @@
 // src/components/UserProfile.jsx
-import React from "react";
-import { User as UserIcon } from "react-feather";
-import { useSelector } from "react-redux";
+import React from 'react';
+import { User as UserIcon } from 'react-feather';
+import { useSelector } from 'react-redux';
 
 const UserProfile = () => {
   const user = useSelector((state) => state.auth.user);
@@ -11,18 +11,18 @@ const UserProfile = () => {
       <div className="user-section">
         <div
           className="user-profile"
-          style={{ display: "flex", alignItems: "center" }}
+          style={{ display: 'flex', alignItems: 'center' }}
         >
           <div className="user-avatar default-avatar">
             <UserIcon size={20} />
           </div>
           <div className="user-info">
-            <div className="user-name" style={{ fontWeight: "bold" }}>
+            <div className="user-name" style={{ fontWeight: 'bold' }}>
               Anonim
             </div>
             <div
               className="user-email"
-              style={{ fontSize: "0.85rem", color: "#666" }}
+              style={{ fontSize: '0.85rem', color: '#666' }}
             >
               belum login
             </div>
@@ -36,7 +36,7 @@ const UserProfile = () => {
     <div className="user-section">
       <div
         className="user-profile"
-        style={{ display: "flex", alignItems: "center" }}
+        style={{ display: 'flex', alignItems: 'center' }}
       >
         {user.avatar ? (
           <img
@@ -44,11 +44,11 @@ const UserProfile = () => {
             alt={user.name}
             className="user-avatar"
             style={{
-              borderRadius: "50%",
-              marginRight: "10px",
-              width: "40px",
-              height: "40px",
-              objectFit: "cover",
+              borderRadius: '50%',
+              marginRight: '10px',
+              width: '40px',
+              height: '40px',
+              objectFit: 'cover',
             }}
           />
         ) : (
@@ -57,14 +57,14 @@ const UserProfile = () => {
           </div>
         )}
         <div className="user-info">
-          <div className="user-name" style={{ fontWeight: "bold" }}>
-            {user.name || "Anonim"}
+          <div className="user-name" style={{ fontWeight: 'bold' }}>
+            {user.name || 'Anonim'}
           </div>
           <div
             className="user-email"
-            style={{ fontSize: "0.85rem", color: "#666" }}
+            style={{ fontSize: '0.85rem', color: '#666' }}
           >
-            {user.email || "belum login"}
+            {user.email || 'belum login'}
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
-import React from "react";
-import { Navigate } from "react-router-dom";
-import api from "../utils/api"; // Pastikan path-nya sesuai
+import React from 'react';
+import { Navigate } from 'react-router-dom';
+import api from '../utils/api'; // Pastikan path-nya sesuai
 
 const ProtectedRoute = ({ children }) => {
   const token = api.getAccessToken();

@@ -27,6 +27,7 @@ const Leaderboard = () => {
   const renderSkeletonRow = (_, index) => (
     <div
       key={index}
+      className="leaderboard-row"
       style={{
         display: "flex",
         alignItems: "center",
@@ -72,6 +73,8 @@ const Leaderboard = () => {
       />
     </div>
   );
+
+  const displayName = currentUser?.name || "Anonim";
 
   return (
     <div className="column center main-grid">
@@ -120,10 +123,7 @@ const Leaderboard = () => {
           ) : (
             <>
               <span style={{ fontWeight: "bold", fontSize: "1rem" }}>
-                {currentUser.name}
-              </span>
-              <span style={{ fontSize: "0.85rem", color: "#666" }}>
-                {currentUser.email}
+                {displayName}
               </span>
             </>
           )}
@@ -148,51 +148,75 @@ const Leaderboard = () => {
       </div>
 
       {/* List */}
-      <ul style={{ listStyle: "none", padding: 0, marginTop: "10px" }}>
+      <ul
+        style={{
+          listStyle: "none",
+          padding: 0,
+          marginTop: "10px",
+          width: "100%",
+        }}
+      >
         {isInitialLoad
           ? [...Array(5)].map(renderSkeletonRow)
-          : leaderboards.map((leaderboard, index) => (
-              <li
-                key={leaderboard.user.id}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "10px 5px",
-                  borderBottom: "1px solid #ddd",
-                }}
-              >
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <img
-                    src={`https://i.pravatar.cc/40?img=${index + 1}`}
-                    alt={leaderboard.user.name}
-                    style={{
-                      width: "40px",
-                      height: "40px",
-                      borderRadius: "50%",
-                      marginRight: "10px",
-                    }}
-                  />
-                  <div>
-                    <div style={{ fontWeight: "bold" }}>
-                      {leaderboard.user.name}
-                    </div>
-                    <div style={{ fontSize: "0.85rem", color: "#666" }}>
-                      {leaderboard.user.email}
-                    </div>
-                  </div>
-                </div>
-                <div
+          : leaderboards.map((leaderboard, index) => {
+              const isCurrentUser =
+                currentUser?.id && leaderboard.user.id === currentUser.id;
+
+              return (
+                <li
+                  key={leaderboard.user.id}
                   style={{
-                    fontWeight: "bold",
-                    fontSize: "1rem",
-                    color: "#333",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    padding: "10px 5px",
+                    borderBottom: "1px solid #ddd",
+                    backgroundColor: isCurrentUser ? "#f5f5f5" : "transparent",
                   }}
                 >
-                  {leaderboard.score} poin
-                </div>
-              </li>
-            ))}
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={`https://i.pravatar.cc/40?img=${index + 1}`}
+                      alt={leaderboard.user.name}
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        borderRadius: "50%",
+                        marginRight: "10px",
+                      }}
+                    />
+                    <div>
+                      <div style={{ fontWeight: "bold" }}>
+                        {leaderboard.user.name}
+                        {isCurrentUser && (
+                          <span
+                            style={{
+                              marginLeft: "5px",
+                              color: "#4CAF50",
+                              fontSize: "0.8em",
+                            }}
+                          >
+                            (Anda)
+                          </span>
+                        )}
+                      </div>
+                      <div style={{ fontSize: "0.85rem", color: "#666" }}>
+                        {leaderboard.user.email}
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: "1rem",
+                      color: "#333",
+                    }}
+                  >
+                    {leaderboard.score} poin
+                  </div>
+                </li>
+              );
+            })}
       </ul>
     </div>
   );

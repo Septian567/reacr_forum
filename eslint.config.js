@@ -12,7 +12,7 @@ export default [
   pluginReact.configs.flat.recommended,
   {
     plugins: {
-      'react-hooks': fixupPluginRules(pluginHooks)
+      'react-hooks': fixupPluginRules(pluginHooks),
     },
     rules: pluginHooks.configs.recommended.rules,
   },
@@ -25,7 +25,9 @@ export default [
       'import/prefer-default-export': 'off',
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
-      'react/jsx-props-no-spreading': 'off'
-    }
-  }
+      'react/jsx-props-no-spreading': 'off',
+      'react/prop-types': 'off',
+      'no-unused-vars': 'off',
+    },
+  },
 ];

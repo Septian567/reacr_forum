@@ -1,17 +1,17 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../../utils/api";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import api from '../../utils/api';
 
 // Constants
-const SLICE_NAME = "auth";
-const IDLE_STATUS = "idle";
-const LOADING_STATUS = "loading";
-const SUCCEEDED_STATUS = "succeeded";
-const FAILED_STATUS = "failed";
+const SLICE_NAME = 'auth';
+const IDLE_STATUS = 'idle';
+const LOADING_STATUS = 'loading';
+const SUCCEEDED_STATUS = 'succeeded';
+const FAILED_STATUS = 'failed';
 
 const ERROR_MESSAGES = {
-  LOGIN: "Login gagal",
-  REGISTER: "Registrasi gagal",
-  FETCH_PROFILE: "Gagal memuat profil",
+  LOGIN: 'Login gagal',
+  REGISTER: 'Registrasi gagal',
+  FETCH_PROFILE: 'Gagal memuat profil',
 };
 
 // Helper function for consistent error handling

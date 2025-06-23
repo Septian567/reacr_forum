@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import DetailSkeleton from "../components/DetailSkeleton";
-import PostHeader from "../components/PostHeader";
-import PostItem from "../components/PostItem";
-import CommentForm from "../components/CommentForm";
-import CommentList from "../components/CommentList";
-import LoadingBar from "react-top-loading-bar";
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import DetailSkeleton from '../components/DetailSkeleton';
+import PostHeader from '../components/PostHeader';
+import PostItem from '../components/PostItem';
+import CommentForm from '../components/CommentForm';
+import CommentList from '../components/CommentList';
+import LoadingBar from 'react-top-loading-bar';
 
 import {
   fetchThreadDetail,
@@ -14,13 +14,13 @@ import {
   voteThread,
   voteComment,
   createComment,
-} from "../features/thread/threadSlice";
+} from '../features/thread/threadSlice';
 
-import api from "../utils/api";
-import "../styles/detailPage.css";
-import "../styles/postList.css";
-import "../styles/CommentForm.css";
-import "../styles/CommentList.css";
+import api from '../utils/api';
+import '../styles/detailPage.css';
+import '../styles/postList.css';
+import '../styles/CommentForm.css';
+import '../styles/CommentList.css';
 // Main DetailPage Component
 const DetailPage = () => {
   const { id } = useParams();
@@ -28,7 +28,7 @@ const DetailPage = () => {
   const dispatch = useDispatch();
 
   const [progress, setProgress] = useState(0);
-  const [comment, setComment] = useState("");
+  const [comment, setComment] = useState('');
   const [user, setUser] = useState(null);
 
   const {
@@ -49,13 +49,13 @@ const DetailPage = () => {
       .finally(() => setProgress(100));
 
     const handleLogoutEvent = () => setUser(null);
-    window.addEventListener("userLoggedOut", handleLogoutEvent);
-    return () => window.removeEventListener("userLoggedOut", handleLogoutEvent);
+    window.addEventListener('userLoggedOut', handleLogoutEvent);
+    return () => window.removeEventListener('userLoggedOut', handleLogoutEvent);
   }, [id, dispatch]);
 
   const getUserProfilePhoto = (username) => {
     const found = users.find((u) => u.name === username);
-    return found?.avatar || "https://via.placeholder.com/40";
+    return found?.avatar || 'https://via.placeholder.com/40';
   };
 
   const handleAddComment = () => {
@@ -64,7 +64,7 @@ const DetailPage = () => {
       dispatch(createComment({ threadId: id, content: comment })).finally(
         () => {
           setProgress(100);
-          setComment("");
+          setComment('');
         }
       );
     }

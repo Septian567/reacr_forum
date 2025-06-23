@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import SearchForm from "../components/SearchForm";
-import CategoryList from "../components/CategoryList";
-import { useSelector } from "react-redux";
-import { selectAllPosts } from "../features/posts/postSlice";
+import React, { useState } from 'react';
+import SearchForm from '../components/SearchForm';
+import CategoryList from '../components/CategoryList';
+import { useSelector } from 'react-redux';
+import { selectAllPosts } from '../features/posts/postSlice';
 
 const Category = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const posts = useSelector(selectAllPosts); // Ambil dari Redux store
+  const [searchQuery, setSearchQuery] = useState('');
+  const posts = useSelector(selectAllPosts);
 
   const categoryMap = posts.reduce((acc, post) => {
     const key = post.category;

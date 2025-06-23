@@ -1,5 +1,5 @@
-import React from "react";
-import ProfilePhoto from "./ProfilePhoto";
+import React from 'react';
+import ProfilePhoto from './ProfilePhoto';
 
 const CommentForm = ({ author, comment, setComment, onSubmit, getPhoto }) => (
   <div className="comment-form">

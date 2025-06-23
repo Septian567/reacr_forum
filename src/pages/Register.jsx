@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { registerUser, resetRegisterState } from "../features/auth/authSlice";
+import React, { useEffect, useState } from 'react';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { registerUser, resetRegisterState } from '../features/auth/authSlice';
 
 const RegisterPage = () => {
   const dispatch = useDispatch();
@@ -13,10 +13,10 @@ const RegisterPage = () => {
   );
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
   });
 
   const [showPassword, setShowPassword] = useState(false);
@@ -26,9 +26,9 @@ const RegisterPage = () => {
 
   useEffect(() => {
     if (isRegistered) {
-      alert("Registrasi berhasil! Silakan login.");
+      alert('Registrasi berhasil! Silakan login.');
       dispatch(resetRegisterState());
-      navigate("/login");
+      navigate('/login');
     }
     if (error) {
       alert(`Registrasi gagal: ${error}`);
@@ -44,12 +44,12 @@ const RegisterPage = () => {
     const { name, email, password, confirmPassword } = formData;
 
     if (!name || !email || !password || !confirmPassword) {
-      alert("Mohon isi semua kolom!");
+      alert('Mohon isi semua kolom!');
       return;
     }
 
     if (password !== confirmPassword) {
-      alert("Password dan konfirmasi tidak cocok!");
+      alert('Password dan konfirmasi tidak cocok!');
       return;
     }
 
@@ -80,7 +80,7 @@ const RegisterPage = () => {
 
         <div style={styles.passwordContainer}>
           <input
-            type={showPassword ? "text" : "password"}
+            type={showPassword ? 'text' : 'password'}
             name="password"
             placeholder="Password"
             value={formData.password}
@@ -105,7 +105,7 @@ const RegisterPage = () => {
 
         <div style={styles.passwordContainer}>
           <input
-            type={showConfirm ? "text" : "password"}
+            type={showConfirm ? 'text' : 'password'}
             name="confirmPassword"
             placeholder="Konfirmasi Password"
             value={formData.confirmPassword}
@@ -129,12 +129,12 @@ const RegisterPage = () => {
         </div>
 
         <button type="submit" style={styles.button} disabled={registerLoading}>
-          {registerLoading ? "Mendaftarkan..." : "Daftar"}
+          {registerLoading ? 'Mendaftarkan...' : 'Daftar'}
         </button>
 
         <div style={styles.footer}>
           <span>Sudah punya akun?</span>
-          <button onClick={() => navigate("/login")} style={styles.linkButton}>
+          <button onClick={() => navigate('/login')} style={styles.linkButton}>
             Login di sini
           </button>
         </div>
@@ -145,74 +145,74 @@ const RegisterPage = () => {
 
 const styles = {
   container: {
-    maxWidth: "700px",
-    width: "90%",
-    margin: "100px auto",
-    padding: "40px",
-    border: "1px solid #ccc",
-    borderRadius: "10px",
-    boxShadow: "0 0 20px rgba(0,0,0,0.1)",
-    backgroundColor: "#fff",
-    textAlign: "center",
+    maxWidth: '700px',
+    width: '90%',
+    margin: '100px auto',
+    padding: '40px',
+    border: '1px solid #ccc',
+    borderRadius: '10px',
+    boxShadow: '0 0 20px rgba(0,0,0,0.1)',
+    backgroundColor: '#fff',
+    textAlign: 'center',
   },
   title: {
-    marginBottom: "30px",
-    fontSize: "26px",
-    fontWeight: "bold",
-    color: "#333",
+    marginBottom: '30px',
+    fontSize: '26px',
+    fontWeight: 'bold',
+    color: '#333',
   },
   form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '20px',
   },
   input: {
-    padding: "14px 16px",
-    fontSize: "16px",
-    borderRadius: "6px",
-    border: "1px solid #ccc",
-    width: "100%",
-    boxSizing: "border-box",
+    padding: '14px 16px',
+    fontSize: '16px',
+    borderRadius: '6px',
+    border: '1px solid #ccc',
+    width: '100%',
+    boxSizing: 'border-box',
   },
   passwordContainer: {
-    position: "relative",
+    position: 'relative',
   },
   iconButton: {
-    position: "absolute",
-    right: "12px",
-    top: "50%",
-    transform: "translateY(-50%)",
-    background: "none",
-    border: "none",
-    cursor: "pointer",
-    color: "#555",
+    position: 'absolute',
+    right: '12px',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    background: 'none',
+    border: 'none',
+    cursor: 'pointer',
+    color: '#555',
   },
   button: {
-    padding: "14px",
-    fontSize: "16px",
-    borderRadius: "6px",
-    backgroundColor: "#1890ff",
-    color: "white",
-    border: "none",
-    cursor: "pointer",
+    padding: '14px',
+    fontSize: '16px',
+    borderRadius: '6px',
+    backgroundColor: '#1890ff',
+    color: 'white',
+    border: 'none',
+    cursor: 'pointer',
   },
   footer: {
-    marginTop: "20px",
-    fontSize: "16px",
-    display: "flex",
-    justifyContent: "center",
-    gap: "6px",
-    alignItems: "center",
+    marginTop: '20px',
+    fontSize: '16px',
+    display: 'flex',
+    justifyContent: 'center',
+    gap: '6px',
+    alignItems: 'center',
   },
   linkButton: {
-    background: "none",
-    border: "none",
+    background: 'none',
+    border: 'none',
     padding: 0,
     margin: 0,
-    color: "#007bff",
-    textDecoration: "underline",
-    cursor: "pointer",
-    fontSize: "16px",
+    color: '#007bff',
+    textDecoration: 'underline',
+    cursor: 'pointer',
+    fontSize: '16px',
   },
 };
 

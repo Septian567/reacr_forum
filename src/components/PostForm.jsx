@@ -1,24 +1,24 @@
-import React, { useState } from "react";
-import { User as UserIcon } from "react-feather";
-import { useSelector } from "react-redux";
-import "../styles/postForm.css";
+import React, { useState } from 'react';
+import { User as UserIcon } from 'react-feather';
+import { useSelector } from 'react-redux';
+import '../styles/postForm.css';
 
 const PostForm = ({ onPost }) => {
-  const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState('');
+  const [category, setCategory] = useState('');
+  const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
 
   const user = useSelector((state) => state.auth.user);
 
   const handleSubmit = async () => {
     if (!title.trim() || !category.trim() || !content.trim()) {
-      alert("Judul, kategori, dan konten tidak boleh kosong.");
+      alert('Judul, kategori, dan konten tidak boleh kosong.');
       return;
     }
 
     if (!user) {
-      alert("Data user belum siap. Coba lagi sebentar.");
+      alert('Data user belum siap. Coba lagi sebentar.');
       return;
     }
 
@@ -32,11 +32,11 @@ const PostForm = ({ onPost }) => {
         user,
       });
 
-      setTitle("");
-      setCategory("");
-      setContent("");
+      setTitle('');
+      setCategory('');
+      setContent('');
     } catch (error) {
-      alert("Gagal membuat postingan: " + error.message);
+      alert(`Gagal membuat postingan: ${  error.message}`);
     } finally {
       setLoading(false);
     }
@@ -48,7 +48,7 @@ const PostForm = ({ onPost }) => {
         {user?.avatar ? (
           <img
             src={user.avatar}
-            alt={user.name || "User"}
+            alt={user.name || 'User'}
             className="profile-photo"
           />
         ) : (
@@ -86,7 +86,7 @@ const PostForm = ({ onPost }) => {
             disabled={loading}
           >
             <span className="btn-text">
-              {loading ? "Mengirim..." : "Kirim"}
+              {loading ? 'Mengirim...' : 'Kirim'}
             </span>
             <span className="btn-icon">+</span>
           </button>

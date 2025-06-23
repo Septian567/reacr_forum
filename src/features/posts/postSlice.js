@@ -2,12 +2,12 @@ import {
   createSlice,
   createAsyncThunk,
   createSelector,
-} from "@reduxjs/toolkit";
-import api from "../../utils/api";
+} from '@reduxjs/toolkit';
+import api from '../../utils/api';
 
 // Async thunk: ambil semua thread dan user, lalu enrich data
 export const fetchPostsAndUsers = createAsyncThunk(
-  "posts/fetchPostsAndUsers",
+  'posts/fetchPostsAndUsers',
   async (_, { rejectWithValue }) => {
     try {
       const [threads, users] = await Promise.all([
@@ -28,16 +28,16 @@ export const fetchPostsAndUsers = createAsyncThunk(
             return {
               ...thread,
               ...detail,
-              author: owner?.name || "Anonim",
-              avatar: owner?.avatar || "https://via.placeholder.com/40",
+              author: owner?.name || 'Anonim',
+              avatar: owner?.avatar || 'https://via.placeholder.com/40',
               totalComments: detail.comments?.length || 0,
             };
           } catch {
             const owner = usersMap[thread.ownerId];
             return {
               ...thread,
-              author: owner?.name || "Anonim",
-              avatar: owner?.avatar || "https://via.placeholder.com/40",
+              author: owner?.name || 'Anonim',
+              avatar: owner?.avatar || 'https://via.placeholder.com/40',
               totalComments: 0,
             };
           }
@@ -52,7 +52,7 @@ export const fetchPostsAndUsers = createAsyncThunk(
 );
 
 export const addNewPost = createAsyncThunk(
-  "posts/addNewPost",
+  'posts/addNewPost',
   async (newPost, { rejectWithValue }) => {
     try {
       const response = await api.createThread(newPost);
@@ -61,8 +61,8 @@ export const addNewPost = createAsyncThunk(
 
       return {
         ...detail,
-        author: newPost.user?.name || "Anonim",
-        avatar: newPost.user?.avatar || "https://via.placeholder.com/40",
+        author: newPost.user?.name || 'Anonim',
+        avatar: newPost.user?.avatar || 'https://via.placeholder.com/40',
         totalComments: detail.comments?.length || 0,
       };
     } catch (err) {
@@ -72,12 +72,12 @@ export const addNewPost = createAsyncThunk(
 );
 
 export const votePost = createAsyncThunk(
-  "posts/votePost",
+  'posts/votePost',
   async ({ postId, type }, { getState, rejectWithValue }) => {
     try {
-      if (type === "up") {
+      if (type === 'up') {
         await api.upVoteThread(postId);
-      } else if (type === "down") {
+      } else if (type === 'down') {
         await api.downVoteThread(postId);
       } else {
         await api.neutralizeVoteThread(postId);
@@ -90,11 +90,11 @@ export const votePost = createAsyncThunk(
 
       return {
         ...updated,
-        author: oldPost?.author || usersMap[updated.ownerId]?.name || "Anonim",
+        author: oldPost?.author || usersMap[updated.ownerId]?.name || 'Anonim',
         avatar:
           oldPost?.avatar ||
           usersMap[updated.ownerId]?.avatar ||
-          "https://via.placeholder.com/40",
+          'https://via.placeholder.com/40',
         totalComments: updated.comments?.length || 0,
       };
     } catch (err) {
@@ -104,7 +104,7 @@ export const votePost = createAsyncThunk(
 );
 
 const postSlice = createSlice({
-  name: "posts",
+  name: 'posts',
   initialState: {
     posts: [],
     usersMap: {},
@@ -118,7 +118,7 @@ const postSlice = createSlice({
         state.selectedCategory === action.payload ? null : action.payload;
     },
     deleteAllPosts: (state) => {
-      if (window.confirm("Hapus semua postingan lokal?")) {
+      if (window.confirm('Hapus semua postingan lokal?')) {
         state.posts = [];
       }
     },

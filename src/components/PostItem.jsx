@@ -1,8 +1,8 @@
-import React from "react";
-import DOMPurify from "dompurify";
-import ProfilePhoto from "./ProfilePhoto";
-import PostActions from "./PostActions";
-import { formatDate } from "../utils/dateFormatter";
+import React from 'react';
+import DOMPurify from 'dompurify';
+import ProfilePhoto from './ProfilePhoto';
+import PostActions from './PostActions';
+import { formatDate } from '../utils/dateFormatter';
 
 const PostItem = ({ post, onVote, getPhoto }) => (
   <div className="post-item">
@@ -16,7 +16,7 @@ const PostItem = ({ post, onVote, getPhoto }) => (
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.body) }}
       />
       <span className="post-date spaced-date">
-        {formatDate(post.createdAt, "full")}
+        {formatDate(post.createdAt, 'full')}
       </span>
       <PostActions
         comments={post.comments?.length}

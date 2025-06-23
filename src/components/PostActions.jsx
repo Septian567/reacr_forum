@@ -1,5 +1,5 @@
-import React from "react";
-import { MessageCircle, ThumbsUp, ThumbsDown } from "react-feather";
+import React from 'react';
+import { MessageCircle, ThumbsUp, ThumbsDown } from 'react-feather';
 
 const PostActions = ({
   comments,
@@ -17,16 +17,16 @@ const PostActions = ({
     )}
     <div
       className="action-item"
-      onClick={() => onVote("up")}
-      style={{ cursor: "pointer" }}
+      onClick={() => onVote('up')}
+      style={{ cursor: 'pointer' }}
     >
       <ThumbsUp size={16} />
       <span>{upvotes}</span>
     </div>
     <div
       className="action-item"
-      onClick={() => onVote("down")}
-      style={{ cursor: "pointer" }}
+      onClick={() => onVote('down')}
+      style={{ cursor: 'pointer' }}
     >
       <ThumbsDown size={16} />
       <span>{downvotes}</span>

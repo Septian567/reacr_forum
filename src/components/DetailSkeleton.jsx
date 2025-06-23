@@ -1,6 +1,6 @@
 // components/DetailSkeleton.jsx
-import React from "react";
-import "../styles/postSkeleton.css";
+import React from 'react';
+import '../styles/postSkeleton.css';
 
 const DetailSkeleton = () => {
   return (

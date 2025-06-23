@@ -1,6 +1,6 @@
 // src/redux/slices/leaderboardSlice.js
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../../utils/api";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import api from '../../utils/api';
 
 const cache = {
   data: null,
@@ -18,7 +18,7 @@ const cache = {
 
 // Async thunk for leaderboard data
 export const fetchLeaderboardData = createAsyncThunk(
-  "leaderboard/fetch",
+  'leaderboard/fetch',
   async (_, { rejectWithValue }) => {
     try {
       const cached = cache.get();
@@ -34,7 +34,7 @@ export const fetchLeaderboardData = createAsyncThunk(
 );
 
 const leaderboardSlice = createSlice({
-  name: "leaderboard",
+  name: 'leaderboard',
   initialState: {
     data: [],
     loading: false,

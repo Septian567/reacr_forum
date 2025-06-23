@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
-import "../styles/columns.css";
-import PostForm from "../components/PostForm";
-import PostList from "../components/PostList";
-import LoadingBar from "react-top-loading-bar";
-import {useDispatch,useSelector} from "react-redux";
-import PostSkeleton from "../components/PostSkeleton";
-import { fetchUserProfile } from "../features/auth/authSlice";
+import React, { useEffect, useState } from 'react';
+import '../styles/columns.css';
+import PostForm from '../components/PostForm';
+import PostList from '../components/PostList';
+import LoadingBar from 'react-top-loading-bar';
+import { useDispatch, useSelector } from 'react-redux';
+import PostSkeleton from '../components/PostSkeleton';
+import { fetchUserProfile } from '../features/auth/authSlice';
 import {
   fetchPostsAndUsers,
   addNewPost,
   votePost,
   selectFilteredPosts,
   selectSelectedCategory,
-} from "../features/posts/postSlice";
+} from '../features/posts/postSlice';
 
 const MainPage = () => {
   const [progress, setProgress] = useState(0);
@@ -29,13 +29,13 @@ const MainPage = () => {
       try {
         await dispatch(fetchUserProfile()).unwrap();
       } catch (err) {
-        console.warn("Tidak login, lewati ambil profil user:", err.message);
+        console.warn('Tidak login, lewati ambil profil user:', err.message);
       }
 
       try {
         await dispatch(fetchPostsAndUsers()).unwrap();
       } catch (err) {
-        console.warn("Gagal ambil data post/user:", err.message);
+        console.warn('Gagal ambil data post/user:', err.message);
       } finally {
         setProgress(100);
       }
@@ -47,9 +47,9 @@ const MainPage = () => {
       // Redux sudah handle state auth
     };
 
-    window.addEventListener("userLoggedOut", handleLogout);
+    window.addEventListener('userLoggedOut', handleLogout);
     return () => {
-      window.removeEventListener("userLoggedOut", handleLogout);
+      window.removeEventListener('userLoggedOut', handleLogout);
       setProgress(0);
     };
   }, [dispatch]);
@@ -75,7 +75,7 @@ const MainPage = () => {
       {user && <PostForm onPost={handleAddPost} />}
 
       {selectedCategory && (
-        <div style={{ marginBottom: "10px" }}>
+        <div style={{ marginBottom: '10px' }}>
           <strong>kategori:</strong> #{selectedCategory}
         </div>
       )}

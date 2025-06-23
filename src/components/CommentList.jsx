@@ -1,7 +1,7 @@
-import React from "react";
-import ProfilePhoto from "./ProfilePhoto";
-import PostActions from "./PostActions";
-import { formatDate } from "../utils/dateFormatter";
+import React from 'react';
+import ProfilePhoto from './ProfilePhoto';
+import PostActions from './PostActions';
+import { formatDate } from '../utils/dateFormatter';
 
 const CommentList = ({ comments, onVote, getPhoto }) => (
   <div className="comment-list">

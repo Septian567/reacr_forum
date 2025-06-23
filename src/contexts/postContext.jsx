@@ -209,7 +209,6 @@ export const PostProvider = ({ children }) => {
     }
   };
 
-
   const deleteAllPosts = () => {
     if (window.confirm("Hapus semua postingan lokal?")) {
       setPosts([]);

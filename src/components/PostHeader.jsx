@@ -1,5 +1,5 @@
-import React from "react";
-import { ArrowLeft } from "react-feather";
+import React from 'react';
+import { ArrowLeft } from 'react-feather';
 
 const PostHeader = ({ onBack }) => (
   <div className="post-header">

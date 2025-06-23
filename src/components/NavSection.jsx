@@ -1,6 +1,6 @@
 // src/components/NavSection.jsx
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   MessageSquare,
   BarChart,
@@ -9,12 +9,12 @@ import {
   Plus,
   X,
   User,
-} from "react-feather";
-import "../styles/NavSection.css";
-import "../styles/postModal.css";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUserProfile, logout } from "../features/auth/authSlice";
-import { addNewPost } from "../features/posts/postSlice";
+} from 'react-feather';
+import '../styles/NavSection.css';
+import '../styles/postModal.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserProfile, logout } from '../features/auth/authSlice';
+import { addNewPost } from '../features/posts/postSlice';
 
 // --- Modal Posting ---
 const PostModal = ({
@@ -41,9 +41,9 @@ const PostModal = ({
         <div
           className="profile-preview"
           style={{
-            display: "flex",
-            alignItems: "center",
-            marginBottom: "1rem",
+            display: 'flex',
+            alignItems: 'center',
+            marginBottom: '1rem',
           }}
         >
           {user?.avatar ? (
@@ -52,32 +52,32 @@ const PostModal = ({
               alt="profile"
               className="profile-image"
               style={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "50%",
-                objectFit: "cover",
-                marginRight: "10px",
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                objectFit: 'cover',
+                marginRight: '10px',
               }}
             />
           ) : (
             <div
               className="profile-icon-circle"
               style={{
-                width: "40px",
-                height: "40px",
-                borderRadius: "50%",
-                backgroundColor: "#ccc",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                marginRight: "10px",
+                width: '40px',
+                height: '40px',
+                borderRadius: '50%',
+                backgroundColor: '#ccc',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginRight: '10px',
               }}
             >
               <User size={20} color="#fff" />
             </div>
           )}
-          <span className="username" style={{ fontWeight: "bold" }}>
-            {user?.name || "Anonim"}
+          <span className="username" style={{ fontWeight: 'bold' }}>
+            {user?.name || 'Anonim'}
           </span>
         </div>
 
@@ -115,9 +115,9 @@ const PostModal = ({
 // --- Komponen Utama ---
 const NavSection = () => {
   const [showModal, setShowModal] = useState(false);
-  const [postTitle, setPostTitle] = useState("");
-  const [postContent, setPostContent] = useState("");
-  const [category, setCategory] = useState("");
+  const [postTitle, setPostTitle] = useState('');
+  const [postContent, setPostContent] = useState('');
+  const [category, setCategory] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -139,7 +139,7 @@ const NavSection = () => {
 
   const handlePost = async () => {
     if (!postTitle.trim() || !postContent.trim()) {
-      alert("Judul dan isi postingan tidak boleh kosong.");
+      alert('Judul dan isi postingan tidak boleh kosong.');
       return;
     }
 
@@ -148,17 +148,17 @@ const NavSection = () => {
         addNewPost({
           title: postTitle,
           body: postContent,
-          category: category || "umum",
+          category: category || 'umum',
           user,
         })
       ).unwrap();
 
-      setPostTitle("");
-      setPostContent("");
-      setCategory("");
+      setPostTitle('');
+      setPostContent('');
+      setCategory('');
       setShowModal(false);
     } catch (err) {
-      alert("Gagal membuat postingan: " + err);
+      alert(`Gagal membuat postingan: ${  err}`);
     }
   };
 
@@ -179,7 +179,7 @@ const NavSection = () => {
           <div
             className="nav-item"
             onClick={handleLogout}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
           >
             <LogOut size={20} className="nav-icon" />
             <span className="nav-text">Logout</span>
@@ -187,8 +187,8 @@ const NavSection = () => {
         ) : (
           <div
             className="nav-item"
-            onClick={() => navigate("/login")}
-            style={{ cursor: "pointer" }}
+            onClick={() => navigate('/login')}
+            style={{ cursor: 'pointer' }}
           >
             <LogIn size={20} className="nav-icon" />
             <span className="nav-text">Login</span>

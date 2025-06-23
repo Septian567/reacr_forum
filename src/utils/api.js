@@ -1,27 +1,27 @@
-import axios from "axios";
+import axios from 'axios';
 
-const BASE_URL = "https://forum-api.dicoding.dev/v1";
+const BASE_URL = 'https://forum-api.dicoding.dev/v1';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
 });
 
 // Token management
 function putAccessToken(token) {
-  localStorage.setItem("accessToken", token);
-  axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  localStorage.setItem('accessToken', token);
+  axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
 function getAccessToken() {
-  return localStorage.getItem("accessToken");
+  return localStorage.getItem('accessToken');
 }
 
 function removeAccessToken() {
-  localStorage.removeItem("accessToken");
-  delete axiosInstance.defaults.headers.common["Authorization"];
+  localStorage.removeItem('accessToken');
+  delete axiosInstance.defaults.headers.common['Authorization'];
 }
 
 // Automatically include token in each request
@@ -35,7 +35,7 @@ axiosInstance.interceptors.request.use((config) => {
 
 // Helper to validate API response
 function handleResponse(response) {
-  if (response.data.status !== "success") {
+  if (response.data.status !== 'success') {
     throw new Error(response.data.message);
   }
   return response.data.data;
@@ -48,7 +48,7 @@ const api = {
   removeAccessToken,
 
   async register({ name, email, password }) {
-    const response = await axiosInstance.post("/register", {
+    const response = await axiosInstance.post('/register', {
       name,
       email,
       password,
@@ -57,22 +57,22 @@ const api = {
   },
 
   async login({ email, password }) {
-    const response = await axiosInstance.post("/login", { email, password });
+    const response = await axiosInstance.post('/login', { email, password });
     return handleResponse(response).token;
   },
 
   async getOwnProfile() {
-    const response = await axiosInstance.get("/users/me");
+    const response = await axiosInstance.get('/users/me');
     return handleResponse(response).user;
   },
 
   async getAllUsers() {
-    const response = await axiosInstance.get("/users");
+    const response = await axiosInstance.get('/users');
     return handleResponse(response).users;
   },
 
   async getAllThreads() {
-    const response = await axiosInstance.get("/threads");
+    const response = await axiosInstance.get('/threads');
     return handleResponse(response).threads;
   },
 
@@ -81,8 +81,8 @@ const api = {
     return handleResponse(response).detailThread;
   },
 
-  async createThread({ title, body, category = "" }) {
-    const response = await axiosInstance.post("/threads", {
+  async createThread({ title, body, category = '' }) {
+    const response = await axiosInstance.post('/threads', {
       title,
       body,
       category,
@@ -136,7 +136,7 @@ const api = {
   },
 
   async getLeaderboards() {
-    const response = await axiosInstance.get("/leaderboards");
+    const response = await axiosInstance.get('/leaderboards');
     return handleResponse(response).leaderboards;
   },
 };

@@ -1,0 +1,49 @@
+/* === Main Layout Grid === */
+.main-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  min-width: 380px;
+  margin: 0 auto;
+  overflow-y: auto;
+}
+
+@media screen and (max-width: 480px) {
+  .main-grid {
+    /* padding: 0.5rem; */
+    min-width: 100%; 
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .column.right.glassmorphism {
+    display: none;
+  }
+}
+
+/* === Responsive === */
+@media screen and (max-width: 600px) {
+  .main-grid {
+    padding: 0 10px;
+  }
+
+  .submit-btn {
+    width: auto;
+    padding: 6px 12px;
+  }
+}
+
+
+.delete-button {
+  background-color: #ff4d4f;
+}
+
+.delete-button:hover {
+  background-color: #e04345;
+}
+
+.category-item.selected {
+  background-color: #d0f0ff;
+  border-radius: 6px;
+}

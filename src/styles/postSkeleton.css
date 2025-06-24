@@ -1,0 +1,47 @@
+/* styles/postSkeleton.css */
+.post-skeleton {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    animation: pulse 1.5s infinite;
+  }
+  
+  .skeleton-avatar {
+    width: 40px;
+    height: 40px;
+    background: #ccc;
+    border-radius: 50%;
+  }
+  
+  .skeleton-content {
+    flex: 1;
+  }
+  
+  .skeleton-line {
+    height: 12px;
+    background: #ddd;
+    margin-bottom: 8px;
+    border-radius: 6px;
+  }
+  
+  .skeleton-line.short {
+    width: 30%;
+  }
+  
+  .skeleton-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  
+  .skeleton-button {
+    width: 24px;
+    height: 24px;
+    background: #ccc;
+    border-radius: 6px;
+  }
+  

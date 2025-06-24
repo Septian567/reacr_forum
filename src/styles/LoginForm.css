@@ -1,0 +1,65 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .login-input {
+    padding: 14px 20px;
+    font-size: 18px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 100%;
+  }
+  
+  .password-container {
+    position: relative;
+  }
+  
+  .icon-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #555;
+  }
+  
+  .login-button {
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 6px;
+    background-color: #1890ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .error-text {
+    color: red;
+    font-size: 14px;
+    text-align: left;
+    margin-top: -10px;
+    margin-bottom: 10px;
+  }
+  
+  .register-container {
+    margin-top: 20px;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+  }
+  
+  .register-button {
+    background: none;
+    border: none;
+    color: #1890ff;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 16px;
+  }
+  

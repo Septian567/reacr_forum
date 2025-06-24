@@ -1,0 +1,68 @@
+17 Mei 2025
+
+TODO
+1. pisahkan MainPage.jsx menjadi beberapa komponen  --- SUCCESS
+2. menyimpan postingan ke local storage  --- SUCCESS
+3. membuat fitur detailPage.jsx  --- SUCCESS
+
+
+TODO NEXT
+1. membuat fitur waktu  -- SUCCESS
+2. membuat fitur post komentar -- SUCCESS
+3. menampilkan komentar -- SUCCESS
+
+TODO 12 Juni 2025
+1. merapikan tampilan detail page  -- SUCCESS
+2. memperbaiki link ke detail page  -- SUCCESS
+3. memasukkan kategori ke menu kategori  -- SUCCESS
+
+TODO 15 Juni 2025
+4. membuat Leaderboard -- SUCCESS
+5. membuat halaman register dan login -- SUCCESS
+6. membuat modal untuk tombol post  -- SUCCESS
+7. menghubungkan ke api -- SUCCESS
+8. refactoring ke redux 
+
+
+TODO 17 Juni 2025
+- menghubungkan ke API
+1. perbaiki waktu -- SUCCESS
+2. hubungkan votes di mainpage dengan API --SUCCESS
+
+TODO 18 Juni 2025
+1. hubungkan detail thread dengan API
+- tampilkan foto profil -- SUCCESS
+- tampilkan konten -- SUCCESS
+- perbaiki tanggal -- SUCCESS
+- perbaiki icon comment -- SUCCESS
+- pasang fitur comment api -- SUCCESS
+- pasang vitur votes comment api -- SUCCESS
+
+2. hubungkan Leaderboard ke API
+- tampilkan nama user dan email user -- SUCCESS
+- tampilkan foto profil, emali, dan skor semua user -- SUCCESS
+
+3. hubungkan modal post ke API
+
+TODO 20 Juni 2025
+- beri foto default untuk user yang belum login  -- SUCCESS
+- beri keterangan anonim untuk user yang belum login -- SUCCESS
+- saat belum login, ganti tulisan logout dengan login -- SUCCESS
+- fitur post disembunyikan saat belum login -- SUCCESS
+
+
+- Refactoring ke redux
+- pasang loading bar 
+- sinkronkan jumlah komentar di mainPage -- SUCCESS
+
+TODO 21 Juni 2025
+1. memasang loading bar saat api memuat data
+- loading bar detailPage -- SUCCESS
+- loading bar leaderboard -- SUCCESS
+- loading bar userAccount (belum login) -- SUCCESS
+- loading bar mainPage (belum login dan sudah login) -- SUCCESS
+
+2. refactoring redux
+- buat placeholder loading untuk mainPage  -- SUCCESS
+- buat placeholder loading untuk detailPage
+- refactoring page ke dalam komponen dan redux

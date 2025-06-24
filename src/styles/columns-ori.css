@@ -1,0 +1,259 @@
+.column {
+  background-color: #ffffff;
+  padding: 2rem;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* Center column specific styling */
+.column.center {
+  flex: 1;
+  min-width: 360px; /* Minimum width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-left: 0px;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .column.center {
+    padding: 1rem;
+  }
+
+  .column.center h2 {
+    font-size: 1.5rem;
+  }
+
+  .column.center p {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .column.center {
+    padding: 0.5rem;
+    min-width: 100%; 
+  }
+}
+
+/* Right Column - Glassmorphism Style */
+.column.right.glassmorphism {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+}
+
+@media screen and (max-width: 500px) {
+  .column.right.glassmorphism {
+    display: none;
+  }
+}
+
+.profile-header {
+  position: absolute;
+  top: 20px;
+  left: 110px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 10;
+}
+
+/* Categories Section */
+.section-title {
+  color: #495057;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.7;
+}
+
+.hashtag-icon {
+  color: #3a86ff;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.category-count {
+  color: #6c757d;
+  font-size: 0.85rem;
+  font-weight: 400;
+  margin-left: auto;
+}
+
+/* Post Container */
+.post-container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+}
+
+/* Input Rows */
+.input-row {
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.profile-wrapper {
+  width: 50px; /* Same width as profile photo + spacing */
+  display: flex;
+  justify-content: center;
+}
+
+/* Profile Photo */
+.profile-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Input Fields */
+.category-input, .content-input {
+  flex: 1;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  font-family: inherit;
+  padding: 8px 0;
+}
+
+.category-input {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  margin-left: 10px; /* Spacing between photo and input */
+  font-size: 1rem;
+}
+
+.content-input {
+  font-size: 1rem;
+  min-height: 40px;
+  resize: none;
+  margin-left: 10px; /* Aligns with category input */
+  padding-top: 12px;
+}
+
+/* Button Row */
+.button-row {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px; /* Aligns with input fields */
+}
+
+.post-button {
+  background-color: #3a86ff;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+/* Compact Post Container */
+.post-container.compact {
+  padding: 15px;
+}
+
+.content-input.compact {
+  min-height: 30px;
+  max-height: 100px;
+}
+
+/* Responsive Button */
+.plus-icon {
+  display: none;
+}
+
+.button-text {
+  display: inline;
+}
+
+
+/* New button styling */
+.submit-action {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 5px;
+  margin-top: 10px;
+}
+
+.submit-btn {
+  background-color: #3a86ff;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 18px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  margin-bottom: 10px;
+}
+
+.submit-btn:hover {
+  background-color: #2a76ef;
+}
+
+.btn-icon {
+  display: none;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 480px) {
+  .submit-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    padding: 0;
+    justify-content: center;
+  }
+  
+  .btn-text {
+    display: none;
+  }
+  
+  .btn-icon {
+    display: block;
+    font-size: 1.1rem;
+  }
+}
+
+/* Divider line styling */
+.divider-line {
+  width: 600px; /* Kompensasi padding container */
+  height: 2px;
+  background-color: rgba(0, 0, 0, 0.1);
+  margin-top: 15px;
+  margin-bottom: 10px;
+}
+
+.post-container.compact {
+  padding: 15px 20px;
+  position: relative;
+  overflow: hidden; /* Untuk memastikan garis tidak keluar container */
+}
+
+/* Adjust button container to account for divider */
+.submit-action {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}

@@ -25,7 +25,8 @@
     "react-redux-loading-bar": "^5.0.8",
     "react-router-dom": "^6.30.0",
     "react-top-loading-bar": "^3.0.2",
-    "socket.io-client": "^4.8.1"
+    "socket.io-client": "^4.8.1",
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
     "@eslint/compat": "^1.2.0",

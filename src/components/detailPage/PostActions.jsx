@@ -1,5 +1,11 @@
-import React from 'react';
-import { MessageCircle, ThumbsUp, ThumbsDown } from 'lucide-react';
+// postActions.jsx
+import React from "react";
+import { MessageCircle, ThumbsUp, ThumbsDown } from "lucide-react";
+import {
+  PostActionsWrapper,
+  ActionItem,
+  ActionButton,
+} from "./PostActions.styles";
 
 const PostActions = ({
   comments,
@@ -16,50 +22,40 @@ const PostActions = ({
   };
 
   return (
-    <div className="post-actions">
+    <PostActionsWrapper>
       {showComments && comments !== undefined && (
-        <div className="action-item">
+        <ActionItem>
           <MessageCircle size={16} />
           <span>{comments}</span>
-        </div>
+        </ActionItem>
       )}
-      <button
-        className="action-item"
-        onClick={(e) => handleClick(e, 'up')}
-        style={{
-          background: 'none',
-          border: 'none',
-          padding: 0,
-          cursor: 'pointer',
-        }}
+
+      <ActionButton
+        onClick={(e) => handleClick(e, "up")}
+        className={hasUpvoted ? "voted" : ""}
       >
         <ThumbsUp
           size={16}
-          fill={hasUpvoted ? 'black' : 'none'}
-          stroke={hasUpvoted ? 'black' : '#555'}
+          fill={hasUpvoted ? "black" : "none"}
+          stroke={hasUpvoted ? "black" : "#555"}
           strokeWidth={2}
         />
         <span>{upvotes}</span>
-      </button>
-      <button
-        className="action-item"
-        onClick={(e) => handleClick(e, 'down')}
-        style={{
-          background: 'none',
-          border: 'none',
-          padding: 0,
-          cursor: 'pointer',
-        }}
+      </ActionButton>
+
+      <ActionButton
+        onClick={(e) => handleClick(e, "down")}
+        className={hasDownvoted ? "voted" : ""}
       >
         <ThumbsDown
           size={16}
-          fill={hasDownvoted ? 'black' : 'none'}
-          stroke={hasDownvoted ? 'black' : '#555'}
+          fill={hasDownvoted ? "black" : "none"}
+          stroke={hasDownvoted ? "black" : "#555"}
           strokeWidth={2}
         />
         <span>{downvotes}</span>
-      </button>
-    </div>
+      </ActionButton>
+    </PostActionsWrapper>
   );
 };
 

@@ -1,26 +1,31 @@
-import React from 'react';
-import ProfilePhoto from './ProfilePhoto';
-import PostActions from './PostActions';
-import { formatDate } from '../../utils/dateFormatter';
+import React from "react";
+import ProfilePhoto from "./ProfilePhoto";
+import PostActions from "./PostActions";
+import { formatDate } from "../../utils/dateFormatter";
+
+import {
+  CommentListContainer,
+  CommentListItem,
+  CommentHeader,
+  CommentAuthor,
+  CommentMeta,
+} from "./CommentList.styles";
 
 const CommentList = ({ comments, onVote, getPhoto }) => (
-  <div className="comment-list">
+  <CommentListContainer>
     <h4>{comments.length} Komentar:</h4>
     {comments.length === 0 ? (
       <p>Belum ada komentar.</p>
     ) : (
       comments.map((c) => (
-        <div key={c.id} className="comment-list-item">
+        <CommentListItem key={c.id}>
           <ProfilePhoto username={c.owner.name} getPhoto={getPhoto} />
           <div style={{ flex: 1 }}>
-            <div className="comment-header">
-              <span className="comment-author">{c.owner.name}</span>
-              <span className="comment-meta">{formatDate(c.createdAt)}</span>
-            </div>
-            <div
-              className="comment-content"
-              dangerouslySetInnerHTML={{ __html: c.content }}
-            />
+            <CommentHeader>
+              <CommentAuthor>{c.owner.name}</CommentAuthor>
+              <CommentMeta>{formatDate(c.createdAt)}</CommentMeta>
+            </CommentHeader>
+            <div dangerouslySetInnerHTML={{ __html: c.content }} />
             <PostActions
               upvotes={c.upVotesBy?.length || 0}
               downvotes={c.downVotesBy?.length || 0}
@@ -28,10 +33,10 @@ const CommentList = ({ comments, onVote, getPhoto }) => (
               showComments={false}
             />
           </div>
-        </div>
+        </CommentListItem>
       ))
     )}
-  </div>
+  </CommentListContainer>
 );
 
 export default CommentList;

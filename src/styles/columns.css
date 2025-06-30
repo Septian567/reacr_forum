@@ -16,11 +16,7 @@
   }
 }
 
-@media screen and (max-width: 500px) {
-  .column.right.glassmorphism {
-    display: none;
-  }
-}
+
 
 /* === Responsive === */
 @media screen and (max-width: 600px) {

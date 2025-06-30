@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import SearchForm from '../components/category/SearchForm';
-import CategoryList from '../components/category/CategoryList'; // GANTI IMPORT
+import CategoryList from '../components/category/CategoryList';
 import { useSelector } from 'react-redux';
 import { selectAllPosts } from '../states/posts/reducer';
 

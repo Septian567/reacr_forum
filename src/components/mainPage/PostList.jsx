@@ -1,51 +1,83 @@
-// src/components/post/PostList.jsx
-import React from 'react';
-import DOMPurify from 'dompurify';
-import PostDate from './PostDate';
-import PostActions from '../detailPage/PostActions';
-import usePostList from '../../hooks/usePostList';
-import '../../styles/postList.css';
+import React from "react";
+import DOMPurify from "dompurify";
+import PostDate from "./PostDate";
+import PostActions from "../detailPage/PostActions";
+import usePostList from "../../hooks/usePostList";
+import {
+  PostListWrapper,
+  PostItem,
+  PostContentWrapper,
+  PostHeader,
+  AccountName,
+  PostCategory,
+  PostContent,
+} from "./PostList.styles";
+import styled from "styled-components";
+
+const ProfileWrapper = styled.div`
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ProfilePhoto = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+`;
+
+const PostTitle = styled.h4`
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0.2rem 0;
+  color: #222;
+`;
+
+const PostContentLink = styled.div`
+  text-decoration: none;
+`;
 
 const PostList = ({ posts, onVote, userId }) => {
   const { handleNavigate, hasUpvoted, hasDownvoted } = usePostList(userId);
 
   return (
-    <div className="post-list">
+    <PostListWrapper>
       {posts.map((post) => (
-        <div
-          className="post-item"
+        <PostItem
           key={post.id}
           onClick={() => handleNavigate(post.id)}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: "pointer" }}
         >
-          <div className="profile-wrapper">
-            <img
-              src={post.avatar || 'https://via.placeholder.com/40'}
-              alt={post.author || 'User'}
-              className="profile-photo"
+          <ProfileWrapper>
+            <ProfilePhoto
+              src={post.avatar || "https://via.placeholder.com/40"}
+              alt={post.author || "User"}
             />
-          </div>
+          </ProfileWrapper>
 
-          <div className="post-content-wrapper">
-            <div className="post-header">
-              <span className="account-name">{post.author || 'Anonim'}</span>
+          <PostContentWrapper
+            to={`/posts/${post.id}`}
+            onClick={(e) => e.preventDefault()}
+          >
+            <PostHeader>
+              <AccountName>{post.author || "Anonim"}</AccountName>
               <PostDate dateString={post.createdAt} mode="auto" />
-            </div>
+            </PostHeader>
 
-            <h4 className="post-title">
-              {post.title?.trim() ? post.title : 'judul'}
-            </h4>
+            <PostTitle>{post.title?.trim() ? post.title : "judul"}</PostTitle>
+            <PostCategory>#{post.category}</PostCategory>
 
-            <h5 className="post-category">#{post.category}</h5>
-
-            <div className="post-content-link">
-              <div
-                className="post-content"
+            <PostContentLink>
+              <PostContent
                 dangerouslySetInnerHTML={{
                   __html: DOMPurify.sanitize(post.body),
                 }}
               />
-            </div>
+            </PostContentLink>
 
             <div onClick={(e) => e.stopPropagation()}>
               <PostActions
@@ -57,10 +89,10 @@ const PostList = ({ posts, onVote, userId }) => {
                 onVote={(type) => onVote(post.id, type)}
               />
             </div>
-          </div>
-        </div>
+          </PostContentWrapper>
+        </PostItem>
       ))}
-    </div>
+    </PostListWrapper>
   );
 };
 

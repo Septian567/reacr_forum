@@ -1,31 +1,37 @@
-import React from 'react';
-import DOMPurify from 'dompurify';
-import ProfilePhoto from './ProfilePhoto';
-import PostActions from './PostActions';
-import { formatDate } from '../../utils/dateFormatter';
+import React from "react";
+import DOMPurify from "dompurify";
+import ProfilePhoto from "./ProfilePhoto";
+import PostActions from "./PostActions";
+import { formatDate } from "../../utils/dateFormatter";
+import {
+  PostItemWrapper,
+  PostContentWrapper,
+  AccountName,
+  PostCategory,
+  PostTitle,
+  PostDetailContent,
+  PostDate,
+} from "./PostItem.styles";
 
 const PostItem = ({ post, onVote, getPhoto }) => (
-  <div className="post-item">
+  <PostItemWrapper>
     <ProfilePhoto username={post.owner.name} getPhoto={getPhoto} />
-    <div className="post-content-wrapper">
-      <span className="account-name">{post.owner.name}</span>
-      <h4 className="post-category">#{post.category}</h4>
-      <h3 className="post-title">{post.title}</h3>
-      <div
-        className="post-detail-content"
+    <PostContentWrapper>
+      <AccountName>{post.owner.name}</AccountName>
+      <PostCategory>#{post.category}</PostCategory>
+      <PostTitle>{post.title}</PostTitle>
+      <PostDetailContent
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.body) }}
       />
-      <span className="post-date spaced-date">
-        {formatDate(post.createdAt, 'full')}
-      </span>
+      <PostDate>{formatDate(post.createdAt, "full")}</PostDate>
       <PostActions
         comments={post.comments?.length}
         upvotes={post.upVotesBy?.length}
         downvotes={post.downVotesBy?.length}
         onVote={onVote}
       />
-    </div>
-  </div>
+    </PostContentWrapper>
+  </PostItemWrapper>
 );
 
 export default PostItem;

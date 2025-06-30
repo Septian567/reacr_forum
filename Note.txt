@@ -1,2 +1,8 @@
 buat gaya penulisan kode yang mudah ditulis dan mudah dibaca, mudah di ingat
 belajar menulis kode secara manual agar tidak bergantung ke ai
+ketika membuat komponen, buat komponen yang memudahkan proses pengembangan dan cari yang bisa dipakai lebih dari sekali
+
+
+install next
+
+npx create-next-app@13.0.3 nama-folder

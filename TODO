@@ -50,7 +50,6 @@ TODO 20 Juni 2025
 - saat belum login, ganti tulisan logout dengan login -- SUCCESS
 - fitur post disembunyikan saat belum login -- SUCCESS
 
-
 - Refactoring ke redux
 - pasang loading bar 
 - sinkronkan jumlah komentar di mainPage -- SUCCESS
@@ -66,3 +65,20 @@ TODO 21 Juni 2025
 - buat placeholder loading untuk mainPage  -- SUCCESS
 - buat placeholder loading untuk detailPage
 - refactoring page ke dalam komponen dan redux
+
+
+TODO 28 Juni 2025
+1. refactoring css ke styled components
+
+TODO 29 Juni 2025 ( 07.00 - 09.00) -- SUCCESS (60% complete)
+1. refactoring css ke styled components
+- refactoring yang mudah dulu, sisakan yang sulit di akhir
+
+2. Next --> lanjut Todo 1 
+- refactoring yang mudah dulu, sisakan yang sulit di akhir  -- SUCCESS (80% complete)
+
+3. refactoring ke next js
+- jalankan file pertama (hello world)
+- jalankan halaman mainPage
+- siapkan tool pendukung mainPage
+- refactoring bila perlu

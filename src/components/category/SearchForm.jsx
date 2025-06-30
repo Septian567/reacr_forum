@@ -1,21 +1,24 @@
-import React from 'react';
-import { Search } from 'react-feather';
-import '../../styles/search-form.css';
+import React from "react";
+import {
+  SearchContainer,
+  SearchInputWrapper,
+  SearchInput,
+  SearchIcon,
+} from "./SearchForm.styles"; // Sesuaikan path jika diperlukan
 
 const SearchForm = ({ searchQuery, setSearchQuery }) => {
   return (
-    <div className="search-container">
-      <div className="search-input-wrapper">
-        <Search size={18} className="search-icon" />
-        <input
+    <SearchContainer>
+      <SearchInputWrapper>
+        <SearchIcon size={18} />
+        <SearchInput
           type="text"
           placeholder="Search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="search-input"
         />
-      </div>
-    </div>
+      </SearchInputWrapper>
+    </SearchContainer>
   );
 };
 

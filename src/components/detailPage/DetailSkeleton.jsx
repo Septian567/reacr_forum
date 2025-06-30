@@ -1,24 +1,36 @@
-import React from 'react';
-import '../../styles/postSkeleton.css';
+import React from "react";
+import {
+  PostSkeletonWrapper,
+  SkeletonAvatar,
+  SkeletonContent,
+  SkeletonLine,
+  SkeletonActions,
+  SkeletonButton,
+} from "./PostSkeleton.styles";
 
 const DetailSkeleton = () => {
   return (
-    <div className="post-skeleton detail-skeleton">
-      <div className="skeleton-avatar" />
-      <div className="skeleton-content">
-        <div className="skeleton-line short" />
-        <div className="skeleton-line" />
-        <div className="skeleton-line" />
-        <div className="skeleton-line" />
-        <div className="skeleton-line" />
-        <div className="skeleton-line" />
-        <div className="skeleton-actions">
-          <div className="skeleton-button" />
-          <div className="skeleton-button" />
-          <div className="skeleton-button" />
-        </div>
+    <PostSkeletonWrapper style={{ flexDirection: "column" }}>
+      <div style={{ display: "flex", gap: "1rem" }}>
+        <SkeletonAvatar />
+        <SkeletonContent>
+          <SkeletonLine className="short" />
+        </SkeletonContent>
       </div>
-    </div>
+
+      <SkeletonContent style={{ marginTop: "1rem" }}>
+        <SkeletonLine />
+        <SkeletonLine />
+        <SkeletonLine />
+        <SkeletonLine />
+        <SkeletonLine />
+        <SkeletonActions>
+          <SkeletonButton />
+          <SkeletonButton />
+          <SkeletonButton />
+        </SkeletonActions>
+      </SkeletonContent>
+    </PostSkeletonWrapper>
   );
 };
 

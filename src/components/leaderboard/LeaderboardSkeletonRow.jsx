@@ -1,18 +1,25 @@
-import React from 'react';
-import '../../styles/LeaderboardSkeletonRow.css';
+import React from "react";
+import {
+  Row,
+  RowLeft,
+  AvatarSkeleton,
+  NameSkeleton,
+  EmailSkeleton,
+  ScoreSkeleton,
+} from "./LeaderboardSkeletonRow.styles";
 
 const LeaderboardSkeletonRow = () => {
   return (
-    <div className="leaderboard-row">
-      <div className="leaderboard-row-left">
-        <div className="skeleton-avatar" />
+    <Row>
+      <RowLeft>
+        <AvatarSkeleton />
         <div>
-          <div className="skeleton-name" />
-          <div className="skeleton-email" />
+          <NameSkeleton />
+          <EmailSkeleton />
         </div>
-      </div>
-      <div className="skeleton-score" />
-    </div>
+      </RowLeft>
+      <ScoreSkeleton />
+    </Row>
   );
 };
 

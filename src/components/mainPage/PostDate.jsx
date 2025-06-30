@@ -1,8 +1,15 @@
-import React from 'react';
-import { formatDate } from '../../utils/dateFormatter';
+import React from "react";
+import styled from "styled-components";
+import { formatDate } from "../../utils/dateFormatter";
 
-const PostDate = ({ dateString, mode = 'auto' }) => {
-  return <span className="post-date">{formatDate(dateString, mode)}</span>;
+const DateText = styled.span`
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 4px;
+`;
+
+const PostDate = ({ dateString, mode = "auto" }) => {
+  return <DateText>{formatDate(dateString, mode)}</DateText>;
 };
 
 export default PostDate;

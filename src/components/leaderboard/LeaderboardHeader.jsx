@@ -1,19 +1,11 @@
-import React from 'react';
+import React from "react";
+import { HeaderContainer } from "./LeaderboardHeader.styles";
 
 const LeaderboardHeader = () => (
-  <div
-    style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      padding: '0 5px 8px 5px',
-      fontWeight: 'bold',
-      color: '#555',
-      borderBottom: '2px solid #ccc',
-    }}
-  >
+  <HeaderContainer>
     <span>Pengguna</span>
     <span>Skor</span>
-  </div>
+  </HeaderContainer>
 );
 
 export default LeaderboardHeader;

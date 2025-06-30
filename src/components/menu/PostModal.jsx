@@ -1,6 +1,19 @@
-import React from 'react';
-import { X, User } from 'react-feather';
-import '../../styles/postModal.css';
+import React from "react";
+import { X, User } from "react-feather";
+import {
+  ModalNoBackdrop,
+  ModalInner,
+  ModalHeader,
+  CloseButton,
+  ModalBody,
+  ProfilePreview,
+  ProfileImage,
+  ProfileIconCircle,
+  Username,
+  ModalInput,
+  ModalTextarea,
+  ModalPostButton,
+} from "./postModal.styles";
 
 const PostModal = ({
   postTitle,
@@ -13,88 +26,51 @@ const PostModal = ({
   onPost,
   user,
 }) => (
-  <div className="modal no-backdrop" onClick={onClose}>
-    <div className="modal-inner" onClick={(e) => e.stopPropagation()}>
-      <div className="modal-header">
+  <ModalNoBackdrop onClick={onClose}>
+    <ModalInner onClick={(e) => e.stopPropagation()}>
+      <ModalHeader>
         <h3>Buat Postingan</h3>
-        <button className="close-button" onClick={onClose}>
+        <CloseButton onClick={onClose}>
           <X size={18} />
-        </button>
-      </div>
+        </CloseButton>
+      </ModalHeader>
 
-      <div className="modal-body">
-        <div
-          className="profile-preview"
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            marginBottom: '1rem',
-          }}
-        >
+      <ModalBody>
+        <ProfilePreview>
           {user?.avatar ? (
-            <img
-              src={user.avatar}
-              alt="profile"
-              className="profile-image"
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '50%',
-                objectFit: 'cover',
-                marginRight: '10px',
-              }}
-            />
+            <ProfileImage src={user.avatar} alt="profile" />
           ) : (
-            <div
-              className="profile-icon-circle"
-              style={{
-                width: '40px',
-                height: '40px',
-                borderRadius: '50%',
-                backgroundColor: '#ccc',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginRight: '10px',
-              }}
-            >
+            <ProfileIconCircle>
               <User size={20} color="#fff" />
-            </div>
+            </ProfileIconCircle>
           )}
-          <span className="username" style={{ fontWeight: 'bold' }}>
-            {user?.name || 'Anonim'}
-          </span>
-        </div>
+          <Username>{user?.name || "Anonim"}</Username>
+        </ProfilePreview>
 
-        <input
+        <ModalInput
           type="text"
           placeholder="Judul"
           value={postTitle}
           onChange={(e) => setPostTitle(e.target.value)}
-          className="modal-input"
         />
 
-        <input
+        <ModalInput
           type="text"
           placeholder="Kategori"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className="modal-input"
         />
 
-        <textarea
-          className="modal-textarea"
+        <ModalTextarea
           placeholder="Apa yang ingin kamu bagikan?"
           value={postContent}
           onChange={(e) => setPostContent(e.target.value)}
         />
 
-        <button className="modal-post-button" onClick={onPost}>
-          Post
-        </button>
-      </div>
-    </div>
-  </div>
+        <ModalPostButton onClick={onPost}>Post</ModalPostButton>
+      </ModalBody>
+    </ModalInner>
+  </ModalNoBackdrop>
 );
 
 export default PostModal;

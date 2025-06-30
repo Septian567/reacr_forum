@@ -1,36 +1,42 @@
-import React from 'react';
-import { Hash } from 'react-feather';
-import '../../styles/category-list.css';
-import { useCategory } from '../../hooks/useCategory';
+// CategoryList.jsx
+import React from "react";
+import { useCategory } from "../../hooks/useCategory";
+import {
+  CategoriesSection,
+  CategoriesList,
+  CategoryItem,
+  CategoryContent,
+  HashtagIcon,
+  CategoryText,
+  CategoryCount,
+} from "./CategoryList.styles";
 
 const CategoryList = ({ categories }) => {
   const { selectedCategory, toggleCategory } = useCategory();
 
   return (
-    <div className="categories-section">
-      <div className="categories-list">
+    <CategoriesSection>
+      <CategoriesList>
         {categories.map((category, index) => {
           const isSelected = selectedCategory === category.name;
-
           return (
-            <div
+            <CategoryItem
               key={index}
-              className={`category-item ${isSelected ? 'selected' : ''}`}
+              className={isSelected ? "selected" : ""}
               onClick={() => toggleCategory(category.name)}
-              style={{ cursor: 'pointer' }}
             >
-              <div className="category-content">
-                <Hash size={16} className="hashtag-icon" />
-                <span className="category-text">
+              <CategoryContent>
+                <HashtagIcon size={16} />
+                <CategoryText>
                   {category.name}
-                  <span className="category-count">({category.count})</span>
-                </span>
-              </div>
-            </div>
+                  <CategoryCount>({category.count})</CategoryCount>
+                </CategoryText>
+              </CategoryContent>
+            </CategoryItem>
           );
         })}
-      </div>
-    </div>
+      </CategoriesList>
+    </CategoriesSection>
   );
 };
 

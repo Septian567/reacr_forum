@@ -1,7 +1,21 @@
-import React from 'react';
-import { User as UserIcon } from 'react-feather';
-import usePostForm from '../../hooks/usePostForm';
-import '../../styles/postForm.css';
+// postForm.jsx
+
+import React from "react";
+import { User as UserIcon } from "react-feather";
+import usePostForm from "../../hooks/usePostForm";
+import {
+  PostFormWrapper,
+  ProfileWrapper,
+  ProfilePhoto,
+  CircleIcon,
+  FormFields,
+  Input,
+  TextArea,
+  SubmitAction,
+  SubmitButton,
+  BtnText,
+  BtnIcon,
+} from "./PostForm.styles";
 
 const PostForm = ({ onPost }) => {
   const {
@@ -17,56 +31,43 @@ const PostForm = ({ onPost }) => {
   } = usePostForm(onPost);
 
   return (
-    <div className="post-form input-row">
-      <div className="profile-wrapper">
+    <PostFormWrapper>
+      <ProfileWrapper>
         {user?.avatar ? (
-          <img
-            src={user.avatar}
-            alt={user.name || 'User'}
-            className="profile-photo"
-          />
+          <ProfilePhoto src={user.avatar} alt={user.name || "User"} />
         ) : (
-          <div className="profile-photo circle-icon">
+          <CircleIcon>
             <UserIcon size={20} />
-          </div>
+          </CircleIcon>
         )}
-      </div>
+      </ProfileWrapper>
 
-      <div className="form-fields">
-        <input
+      <FormFields>
+        <Input
           type="text"
           placeholder="Judul"
-          className="title-input"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <input
+        <Input
           type="text"
           placeholder="Kategori"
-          className="category-input"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
         />
-        <textarea
+        <TextArea
           placeholder="Isi konten..."
-          className="content-input"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-        ></textarea>
-        <div className="submit-action">
-          <button
-            className="submit-btn"
-            onClick={handleSubmit}
-            disabled={loading}
-          >
-            <span className="btn-text">
-              {loading ? 'Mengirim...' : 'Kirim'}
-            </span>
-            <span className="btn-icon">+</span>
-          </button>
-        </div>
-      </div>
-    </div>
+        />
+        <SubmitAction>
+          <SubmitButton onClick={handleSubmit} disabled={loading}>
+            <BtnText>{loading ? "Mengirim..." : "Kirim"}</BtnText>
+            <BtnIcon>+</BtnIcon>
+          </SubmitButton>
+        </SubmitAction>
+      </FormFields>
+    </PostFormWrapper>
   );
 };
 

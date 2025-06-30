@@ -1,19 +1,26 @@
-import React from 'react';
-import ProfilePhoto from './ProfilePhoto';
+import React from "react";
+import ProfilePhoto from "./ProfilePhoto";
+import {
+  CommentFormWrapper,
+  FormInnerWrapper,
+  ReplyLabel,
+  CommentTextarea,
+  SubmitButton,
+} from "./CommentForm.styles";
 
 const CommentForm = ({ author, comment, setComment, onSubmit, getPhoto }) => (
-  <div className="comment-form">
+  <CommentFormWrapper onSubmit={(e) => e.preventDefault()}>
     <ProfilePhoto username={author} getPhoto={getPhoto} />
-    <div className="form-wrapper">
-      <div className="reply-label">Replying to @{author}</div>
-      <textarea
+    <FormInnerWrapper>
+      <ReplyLabel>Replying to @{author}</ReplyLabel>
+      <CommentTextarea
         value={comment}
         onChange={(e) => setComment(e.target.value)}
         placeholder="Tulis komentar Anda..."
       />
-      <button onClick={onSubmit}>Kirim Komentar</button>
-    </div>
-  </div>
+      <SubmitButton onClick={onSubmit}>Kirim Komentar</SubmitButton>
+    </FormInnerWrapper>
+  </CommentFormWrapper>
 );
 
 export default CommentForm;

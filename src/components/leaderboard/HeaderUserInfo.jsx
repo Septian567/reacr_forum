@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Wrapper,
   BackButton,
@@ -7,7 +7,7 @@ import {
   EmailSkeleton,
   UserName,
   UserEmail,
-} from "./HeaderUserInfo.styles";
+} from '../../styles/HeaderUserInfo.styles';
 
 const HeaderUserInfo = ({
   isUserLoading,

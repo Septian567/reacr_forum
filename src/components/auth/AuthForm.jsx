@@ -1,5 +1,11 @@
-import React from "react";
-import { StyledForm } from "./AuthForm.styles"; // Pastikan path sesuai
+import React from 'react';
+import styled from 'styled-components';
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
 
 const AuthForm = ({ onSubmit, children }) => {
   return <StyledForm onSubmit={onSubmit}>{children}</StyledForm>;

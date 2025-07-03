@@ -6,3 +6,14 @@ ketika membuat komponen, buat komponen yang memudahkan proses pengembangan dan c
 install next
 
 npx create-next-app@13.0.3 nama-folder
+
+cara test komponen dengan vitest
+- harus ada file vitest.config.js dan npm yang di install
+- harus import ini
+
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import PostActions from './PostActions';
+import '@testing-library/jest-dom/vitest';
+

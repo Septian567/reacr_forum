@@ -1,8 +1,8 @@
 // postForm.jsx
 
-import React from "react";
-import { User as UserIcon } from "react-feather";
-import usePostForm from "../../hooks/usePostForm";
+import React from 'react';
+import { User as UserIcon } from 'react-feather';
+import usePostForm from '../../hooks/usePostForm';
 import {
   PostFormWrapper,
   ProfileWrapper,
@@ -15,7 +15,7 @@ import {
   SubmitButton,
   BtnText,
   BtnIcon,
-} from "./PostForm.styles";
+} from '../../styles/PostForm.styles';
 
 const PostForm = ({ onPost }) => {
   const {
@@ -34,7 +34,7 @@ const PostForm = ({ onPost }) => {
     <PostFormWrapper>
       <ProfileWrapper>
         {user?.avatar ? (
-          <ProfilePhoto src={user.avatar} alt={user.name || "User"} />
+          <ProfilePhoto src={user.avatar} alt={user.name || 'User'} />
         ) : (
           <CircleIcon>
             <UserIcon size={20} />
@@ -62,7 +62,7 @@ const PostForm = ({ onPost }) => {
         />
         <SubmitAction>
           <SubmitButton onClick={handleSubmit} disabled={loading}>
-            <BtnText>{loading ? "Mengirim..." : "Kirim"}</BtnText>
+            <BtnText>{loading ? 'Mengirim...' : 'Kirim'}</BtnText>
             <BtnIcon>+</BtnIcon>
           </SubmitButton>
         </SubmitAction>

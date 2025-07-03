@@ -1,8 +1,6 @@
-// src/features/user/reducer.js
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchUserProfile } from './action';
-import { logout } from '../auth/reducer'; // pastikan ini sesuai path ekspor logout
-
+import { logout } from '../auth/reducer';
 const userSlice = createSlice({
   name: 'user',
   initialState: {

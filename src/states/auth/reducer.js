@@ -1,5 +1,3 @@
-// store/auth/reducer.js
-
 import { createSlice } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 import { loginUser, registerUser, fetchUserProfile } from './action';

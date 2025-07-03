@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   RowItem,
   UserInfo,
@@ -8,7 +8,7 @@ import {
   UserEmail,
   ScoreText,
   CurrentUserTag,
-} from "./LeaderboardRow.styles";
+} from '../../styles/LeaderboardRow.styles';
 
 const LeaderboardRow = ({ leaderboard, index, isCurrentUser }) => (
   <RowItem $highlight={isCurrentUser}>

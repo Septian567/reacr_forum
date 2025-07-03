@@ -1,5 +1,5 @@
-import React from "react";
-import { Container, Title } from "./AuthFormContainer.styles"; // Sesuaikan path jika perlu
+import React from 'react';
+import { Container, Title } from '../../styles/AuthFormContainer.styles';
 
 const AuthFormContainer = ({ title, children }) => {
   return (

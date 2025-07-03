@@ -77,8 +77,18 @@ TODO 29 Juni 2025 ( 07.00 - 09.00) -- SUCCESS (60% complete)
 2. Next --> lanjut Todo 1 
 - refactoring yang mudah dulu, sisakan yang sulit di akhir  -- SUCCESS (80% complete)
 
-3. refactoring ke next js
+3. refactoring ke next js  -- SUCCESS 20%  --FAILED 80%  (struktur next js sudah ketemu)
 - jalankan file pertama (hello world)
 - jalankan halaman mainPage
 - siapkan tool pendukung mainPage
 - refactoring bila perlu
+
+
+TODO 30 Juni 2025
+1. rapikan styled components ke folder styles -- SUCCESS
+2. buat kode test -- SUCCESS
+
+TODO 2 Juli 2025
+1. buat kode test untuk komponen dengan React Testing Library
+- rapikan contoh kode test komponen
+- 

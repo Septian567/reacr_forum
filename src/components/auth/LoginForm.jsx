@@ -1,7 +1,6 @@
-// src/components/LoginForm.jsx
-import React from "react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 import {
   LoginFormWrapper,
   LoginInput,
@@ -11,7 +10,7 @@ import {
   ErrorText,
   RegisterContainer,
   RegisterButton,
-} from "./LoginForm.styles";
+} from '../../styles/LoginForm.styles';
 
 const LoginForm = ({
   email,
@@ -29,7 +28,7 @@ const LoginForm = ({
   const navigate = useNavigate();
 
   return (
-    <LoginFormWrapper onSubmit={handleSubmit}>
+    <LoginFormWrapper onSubmit={handleSubmit} data-testid="login-form">
       <LoginInput
         type="email"
         placeholder="Email"
@@ -39,7 +38,7 @@ const LoginForm = ({
 
       <PasswordContainer>
         <LoginInput
-          type={showPassword ? "text" : "password"}
+          type={showPassword ? 'text' : 'password'}
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -59,19 +58,19 @@ const LoginForm = ({
         )}
       </PasswordContainer>
 
-      {status === "failed" && error && (
+      {status === 'failed' && error && (
         <ErrorText>
-          {error.includes("401") ? "Email atau password salah" : error}
+          {error.includes('401') ? 'Email atau password salah' : error}
         </ErrorText>
       )}
 
-      <LoginButton type="submit" disabled={status === "loading"}>
-        {status === "loading" ? "Logging in..." : "Login"}
+      <LoginButton type="submit" disabled={status === 'loading'}>
+        {status === 'loading' ? 'Logging in...' : 'Login'}
       </LoginButton>
 
       <RegisterContainer>
         <span>Belum punya akun?</span>
-        <RegisterButton type="button" onClick={() => navigate("/register")}>
+        <RegisterButton type="button" onClick={() => navigate('/register')}>
           Register
         </RegisterButton>
       </RegisterContainer>

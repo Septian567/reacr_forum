@@ -1,5 +1,5 @@
-import React from "react";
-import { FooterContainer, LinkButton } from "./AuthFooter.styles"; // Sesuaikan path
+import React from 'react';
+import { FooterContainer, LinkButton } from '../../styles/AuthFooter.styles';
 
 const AuthFooter = ({ text, buttonText, onClick }) => {
   return (

@@ -1,0 +1,15 @@
+- authReducer function
+   - should return the initial state when given by unknown action
+   - should handle registerUser.pending action correctly
+   - should handle registerUser.fulfilled action correctly
+   - should handle registerUser.rejected action correctly
+   - should handle loginUser.pending action correctly
+   - should handle loginUser.fulfilled action correctly
+   - should handle loginUser.rejected action correctly
+   - should handle fetchUserProfile.pending action correctly
+   - should handle fetchUserProfile.fulfilled action correctly
+   - should handle fetchUserProfile.rejected action correctly
+   - should handle logout action correctly
+   - should handle resetRegisterState action correctly
+   - should handle resetLoginState action correctly
+

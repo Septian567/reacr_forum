@@ -1,0 +1,19 @@
+/**
+ * - threadReducer function
+ *   - should return the initial state when given an unknown action
+ *
+ * - clearThreadDetail reducer
+ *   - should reset threadDetail to null
+ *
+ * - fetchThreadDetail async thunk
+ *   - should set loading true on pending
+ *   - should set threadDetail and loading false on fulfilled
+ *   - should set error and loading false on rejected
+ *
+ * - fetchAllUsers async thunk
+ *   - should populate users on fulfilled
+ *
+ * - matcher for thread/.*\/fulfilled actions
+ *   - should update threadDetail if payload contains an id
+ *   - should not update threadDetail if payload does not contain id
+ */

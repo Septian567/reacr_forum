@@ -1,4 +1,3 @@
-// src/features/thread/action.js
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 

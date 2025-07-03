@@ -1,5 +1,3 @@
-// store/leaderboard/action.js
-
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 
@@ -19,6 +17,11 @@ const cache = {
   },
 };
 
+export const __resetCache = () => {
+  cache.data = null;
+  cache.lastFetch = 0;
+};
+
 export const fetchLeaderboardData = createAsyncThunk(
   'leaderboard/fetch',
   async (_, { rejectWithValue }) => {
@@ -34,3 +37,5 @@ export const fetchLeaderboardData = createAsyncThunk(
     }
   }
 );
+
+export { cache };

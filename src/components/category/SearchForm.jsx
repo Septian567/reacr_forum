@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 import {
   SearchContainer,
   SearchInputWrapper,
   SearchInput,
   SearchIcon,
-} from "./SearchForm.styles"; // Sesuaikan path jika diperlukan
+} from '../../styles/SearchForm.styles'; // Sesuaikan path jika diperlukan
 
 const SearchForm = ({ searchQuery, setSearchQuery }) => {
   return (

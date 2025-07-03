@@ -1,0 +1,21 @@
+/**
+ * - PostActions component
+ *   - should render comments count if showComments is true and comments are defined
+ *   - should not render comments count if showComments is false
+ *   - should not render comments count if comments is undefined
+ *   - should render upvotes and downvotes correctly
+ *   - should apply "voted" class to upvote button if hasUpvoted is true
+ *   - should apply "voted" class to downvote button if hasDownvoted is true
+ *   - should call onVote with "up" when upvote button is clicked
+ *   - should call onVote with "down" when downvote button is clicked
+ *   - should stop event propagation when voting buttons are clicked
+ */
+
+/**
+ * - DetailSkeleton component
+ *   - should render wrapper with column direction
+ *   - should render skeleton avatar
+ *   - should render one short skeleton line (username/title)
+ *   - should render multiple content skeleton lines (e.g., 5 lines)
+ *   - should render skeleton action buttons (e.g., 3 buttons)
+ */

@@ -1,5 +1,5 @@
-import React from "react";
-import { X, User } from "react-feather";
+import React from 'react';
+import { X, User } from 'react-feather';
 import {
   ModalNoBackdrop,
   ModalInner,
@@ -13,7 +13,7 @@ import {
   ModalInput,
   ModalTextarea,
   ModalPostButton,
-} from "./postModal.styles";
+} from '../../styles/postModal.styles';
 
 const PostModal = ({
   postTitle,
@@ -44,7 +44,7 @@ const PostModal = ({
               <User size={20} color="#fff" />
             </ProfileIconCircle>
           )}
-          <Username>{user?.name || "Anonim"}</Username>
+          <Username>{user?.name || 'Anonim'}</Username>
         </ProfilePreview>
 
         <ModalInput

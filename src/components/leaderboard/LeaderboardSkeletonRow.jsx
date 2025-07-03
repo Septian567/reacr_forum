@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Row,
   RowLeft,
@@ -6,7 +6,7 @@ import {
   NameSkeleton,
   EmailSkeleton,
   ScoreSkeleton,
-} from "./LeaderboardSkeletonRow.styles";
+} from '../../styles/LeaderboardSkeletonRow.styles';
 
 const LeaderboardSkeletonRow = () => {
   return (

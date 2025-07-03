@@ -1,5 +1,3 @@
-// store/posts/reducer.js
-
 import { createSlice, createSelector } from '@reduxjs/toolkit';
 import { fetchPostsAndUsers, addNewPost, votePost } from './action';
 

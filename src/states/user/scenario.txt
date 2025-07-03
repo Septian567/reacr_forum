@@ -1,0 +1,13 @@
+/**
+ * - userReducer function
+ *
+ *   - should return the initial state when given an unknown action
+ *
+ * - fetchUserProfile async thunk
+ *   - should set loading true and reset error on pending
+ *   - should set profile and loading false on fulfilled
+ *   - should set error, reset profile, and loading false on rejected
+ *
+ * - logout action from auth reducer
+ *   - should reset profile, loading, and error to initial state
+ */

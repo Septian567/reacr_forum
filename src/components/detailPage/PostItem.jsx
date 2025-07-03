@@ -1,8 +1,8 @@
-import React from "react";
-import DOMPurify from "dompurify";
-import ProfilePhoto from "./ProfilePhoto";
-import PostActions from "./PostActions";
-import { formatDate } from "../../utils/dateFormatter";
+import React from 'react';
+import DOMPurify from 'dompurify';
+import ProfilePhoto from './ProfilePhoto';
+import PostActions from './PostActions';
+import { formatDate } from '../../utils/dateFormatter';
 import {
   PostItemWrapper,
   PostContentWrapper,
@@ -11,7 +11,7 @@ import {
   PostTitle,
   PostDetailContent,
   PostDate,
-} from "./PostItem.styles";
+} from '../../styles/PostItem.styles';
 
 const PostItem = ({ post, onVote, getPhoto }) => (
   <PostItemWrapper>
@@ -23,7 +23,7 @@ const PostItem = ({ post, onVote, getPhoto }) => (
       <PostDetailContent
         dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.body) }}
       />
-      <PostDate>{formatDate(post.createdAt, "full")}</PostDate>
+      <PostDate>{formatDate(post.createdAt, 'full')}</PostDate>
       <PostActions
         comments={post.comments?.length}
         upvotes={post.upVotesBy?.length}

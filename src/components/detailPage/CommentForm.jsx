@@ -1,12 +1,12 @@
-import React from "react";
-import ProfilePhoto from "./ProfilePhoto";
+import React from 'react';
+import ProfilePhoto from './ProfilePhoto';
 import {
   CommentFormWrapper,
   FormInnerWrapper,
   ReplyLabel,
   CommentTextarea,
   SubmitButton,
-} from "./CommentForm.styles";
+} from '../../styles/CommentForm.styles';
 
 const CommentForm = ({ author, comment, setComment, onSubmit, getPhoto }) => (
   <CommentFormWrapper onSubmit={(e) => e.preventDefault()}>

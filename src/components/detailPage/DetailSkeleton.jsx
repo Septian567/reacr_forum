@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   PostSkeletonWrapper,
   SkeletonAvatar,
@@ -6,28 +6,28 @@ import {
   SkeletonLine,
   SkeletonActions,
   SkeletonButton,
-} from "./PostSkeleton.styles";
+} from '../../styles/PostSkeleton.styles';
 
 const DetailSkeleton = () => {
   return (
-    <PostSkeletonWrapper style={{ flexDirection: "column" }}>
-      <div style={{ display: "flex", gap: "1rem" }}>
-        <SkeletonAvatar />
+    <PostSkeletonWrapper style={{ flexDirection: 'column' }}>
+      <div style={{ display: 'flex', gap: '1rem' }}>
+        <SkeletonAvatar data-testid="skeleton-avatar" />
         <SkeletonContent>
-          <SkeletonLine className="short" />
+          <SkeletonLine className="short" data-testid="skeleton-line-short" />
         </SkeletonContent>
       </div>
 
-      <SkeletonContent style={{ marginTop: "1rem" }}>
-        <SkeletonLine />
-        <SkeletonLine />
-        <SkeletonLine />
-        <SkeletonLine />
-        <SkeletonLine />
+      <SkeletonContent style={{ marginTop: '1rem' }}>
+        <SkeletonLine data-testid="skeleton-line" />
+        <SkeletonLine data-testid="skeleton-line" />
+        <SkeletonLine data-testid="skeleton-line" />
+        <SkeletonLine data-testid="skeleton-line" />
+        <SkeletonLine data-testid="skeleton-line" />
         <SkeletonActions>
-          <SkeletonButton />
-          <SkeletonButton />
-          <SkeletonButton />
+          <SkeletonButton data-testid="skeleton-button" />
+          <SkeletonButton data-testid="skeleton-button" />
+          <SkeletonButton data-testid="skeleton-button" />
         </SkeletonActions>
       </SkeletonContent>
     </PostSkeletonWrapper>

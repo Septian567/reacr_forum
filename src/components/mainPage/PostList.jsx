@@ -1,8 +1,8 @@
-import React from "react";
-import DOMPurify from "dompurify";
-import PostDate from "./PostDate";
-import PostActions from "../detailPage/PostActions";
-import usePostList from "../../hooks/usePostList";
+import React from 'react';
+import DOMPurify from 'dompurify';
+import PostDate from './PostDate';
+import PostActions from '../detailPage/PostActions';
+import usePostList from '../../hooks/usePostList';
 import {
   PostListWrapper,
   PostItem,
@@ -11,8 +11,8 @@ import {
   AccountName,
   PostCategory,
   PostContent,
-} from "./PostList.styles";
-import styled from "styled-components";
+} from '../../styles/PostList.styles';
+import styled from 'styled-components';
 
 const ProfileWrapper = styled.div`
   width: 40px;
@@ -50,12 +50,12 @@ const PostList = ({ posts, onVote, userId }) => {
         <PostItem
           key={post.id}
           onClick={() => handleNavigate(post.id)}
-          style={{ cursor: "pointer" }}
+          style={{ cursor: 'pointer' }}
         >
           <ProfileWrapper>
             <ProfilePhoto
-              src={post.avatar || "https://via.placeholder.com/40"}
-              alt={post.author || "User"}
+              src={post.avatar || 'https://via.placeholder.com/40'}
+              alt={post.author || 'User'}
             />
           </ProfileWrapper>
 
@@ -64,11 +64,11 @@ const PostList = ({ posts, onVote, userId }) => {
             onClick={(e) => e.preventDefault()}
           >
             <PostHeader>
-              <AccountName>{post.author || "Anonim"}</AccountName>
+              <AccountName>{post.author || 'Anonim'}</AccountName>
               <PostDate dateString={post.createdAt} mode="auto" />
             </PostHeader>
 
-            <PostTitle>{post.title?.trim() ? post.title : "judul"}</PostTitle>
+            <PostTitle>{post.title?.trim() ? post.title : 'judul'}</PostTitle>
             <PostCategory>#{post.category}</PostCategory>
 
             <PostContentLink>

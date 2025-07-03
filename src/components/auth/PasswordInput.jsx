@@ -1,11 +1,10 @@
-import React from "react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
+import React from 'react';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import {
   PasswordContainer,
   StyledInput,
   IconButton,
-} from "./PasswordInput.styles"; // Pastikan path-nya sesuai
-
+} from '../../styles/PasswordInput.styles';
 const PasswordInput = ({
   name,
   placeholder,
@@ -19,7 +18,7 @@ const PasswordInput = ({
   return (
     <PasswordContainer>
       <StyledInput
-        type={showPassword ? "text" : "password"}
+        type={showPassword ? 'text' : 'password'}
         name={name}
         placeholder={placeholder}
         value={value}

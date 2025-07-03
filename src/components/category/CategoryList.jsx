@@ -1,6 +1,6 @@
 // CategoryList.jsx
-import React from "react";
-import { useCategory } from "../../hooks/useCategory";
+import React from 'react';
+import { useCategory } from '../../hooks/useCategory';
 import {
   CategoriesSection,
   CategoriesList,
@@ -9,7 +9,7 @@ import {
   HashtagIcon,
   CategoryText,
   CategoryCount,
-} from "./CategoryList.styles";
+} from '../../styles/CategoryList.styles';
 
 const CategoryList = ({ categories }) => {
   const { selectedCategory, toggleCategory } = useCategory();
@@ -22,7 +22,7 @@ const CategoryList = ({ categories }) => {
           return (
             <CategoryItem
               key={index}
-              className={isSelected ? "selected" : ""}
+              className={isSelected ? 'selected' : ''}
               onClick={() => toggleCategory(category.name)}
             >
               <CategoryContent>

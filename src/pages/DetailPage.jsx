@@ -1,15 +1,15 @@
-import React from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-import useThreadDetail from "../hooks/useThreadDetail";
+import useThreadDetail from '../hooks/useThreadDetail';
 
-import DetailSkeleton from "../components/detailPage/DetailSkeleton";
-import PostHeader from "../components/detailPage/PostHeader";
-import PostItem from "../components/detailPage/PostItem";
-import CommentForm from "../components/detailPage/CommentForm";
-import CommentList from "../components/detailPage/CommentList";
-import LoadingBar from "react-top-loading-bar";
+import DetailSkeleton from '../components/detailPage/DetailSkeleton';
+import PostHeader from '../components/detailPage/PostHeader';
+import PostItem from '../components/detailPage/PostItem';
+import CommentForm from '../components/detailPage/CommentForm';
+import CommentList from '../components/detailPage/CommentList';
+import LoadingBar from 'react-top-loading-bar';
 
 const Container = styled.div`
   display: flex;

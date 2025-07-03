@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { ArrowLeft } from "react-feather";
+import React from 'react';
+import styled from 'styled-components';
+import { ArrowLeft } from 'react-feather';
 
 const HeaderWrapper = styled.div`
   display: flex;

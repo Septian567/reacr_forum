@@ -1,5 +1,5 @@
-import React from "react";
-import { HeaderContainer } from "./LeaderboardHeader.styles";
+import React from 'react';
+import { HeaderContainer } from '../../styles/LeaderboardHeader.styles';
 
 const LeaderboardHeader = () => (
   <HeaderContainer>

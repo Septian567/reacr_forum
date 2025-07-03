@@ -1,5 +1,3 @@
-// store/auth/action.js
-
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../utils/api';
 
@@ -10,7 +8,6 @@ const ERROR_MESSAGES = {
   FETCH_PROFILE: 'Gagal memuat profil',
 };
 
-// Helper function
 const handleAsyncError = (error, defaultMessage) => {
   return error.message || defaultMessage;
 };

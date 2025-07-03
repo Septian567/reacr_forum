@@ -1,0 +1,26 @@
+/**
+ * - postReducer function
+ *   - should return the initial state when given an unknown action
+ *
+ * - setSelectedCategory reducer
+ *   - should set selectedCategory if it's different
+ *   - should unset selectedCategory if the same category is selected again
+ *
+ * - deleteAllPosts reducer
+ *   - should clear posts if user confirms
+ *   - should not clear posts if user cancels
+ *
+ * - updatePostData reducer
+ *   - should update specific post by id
+ *
+ * - fetchPostsAndUsers async thunk
+ *   - should set isLoading true and error null on pending
+ *   - should set posts and usersMap, isLoading false on fulfilled
+ *   - should set error and isLoading false on rejected
+ *
+ * - addNewPost async thunk
+ *   - should prepend new post to posts on fulfilled
+ *
+ * - votePost async thunk
+ *   - should update post by id with new vote data on fulfilled
+ */

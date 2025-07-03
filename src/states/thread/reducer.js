@@ -1,4 +1,3 @@
-// src/features/thread/reducer.js
 import { createSlice } from '@reduxjs/toolkit';
 import {
   fetchThreadDetail,

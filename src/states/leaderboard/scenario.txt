@@ -1,0 +1,7 @@
+/**
+ * - leaderboardReducer function
+ *   - should return the initial state when given an unknown action
+ *   - should handle fetchLeaderboardData.pending action correctly
+ *   - should handle fetchLeaderboardData.fulfilled action correctly
+ *   - should handle fetchLeaderboardData.rejected action correctly
+ */

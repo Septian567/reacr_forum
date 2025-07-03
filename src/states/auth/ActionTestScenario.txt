@@ -1,0 +1,13 @@
+/**
+ * - loginUser
+ *   - should dispatch fulfilled action with user data on success
+ *   - should dispatch rejected action on failure
+ *
+ * - registerUser
+ *   - should dispatch fulfilled action on successful registration
+ *   - should dispatch rejected action on registration failure
+ *
+ * - fetchUserProfile
+ *   - should dispatch fulfilled action with user data
+ *   - should dispatch rejected action on failure
+ */

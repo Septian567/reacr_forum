@@ -1,0 +1,25 @@
+/**
+ * - LoginForm component
+ *   - should render correctly with initial props
+ *   - should call setEmail when email input changes
+ *   - should call setPassword when password input changes
+ *   - should toggle password visibility when eye icon is clicked
+ *   - should show error message when status is failed
+ *   - should show custom error message for 401 error
+ *   - should disable login button when status is loading
+ *   - should navigate to register page when register button is clicked
+ *   - should call handleSubmit when form is submitted
+ */
+
+/**
+ * - PasswordInput component
+ *   - should render correctly with default props
+ *   - should render input with type "password" when showPassword is false
+ *   - should render input with type "text" when showPassword is true
+ *   - should call onChange when the input value changes
+ *   - should call setIsFocused(true) when input is focused
+ *   - should call setIsFocused(false) after input blur (with delay)
+ *   - should show eye icon when isFocused is true
+ *   - should not show eye icon when isFocused is false
+ *   - should toggle showPassword when eye icon is clicked
+ */

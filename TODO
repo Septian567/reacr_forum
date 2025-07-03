@@ -89,6 +89,8 @@ TODO 30 Juni 2025
 2. buat kode test -- SUCCESS
 
 TODO 2 Juli 2025
-1. buat kode test untuk komponen dengan React Testing Library
-- rapikan contoh kode test komponen
-- 
+1. buat kode test untuk komponen dengan React Testing Library -- SUCCESS
+- rapikan contoh kode test komponen -- SUCCESS
+
+TODO 3 Juli 2025
+1. buat end to end test Login

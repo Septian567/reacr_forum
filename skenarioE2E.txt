@@ -1,0 +1,87 @@
+Skenario
+
+1. Aplikasi harus menampilkan halaman login dengan benar
+2. Aplikasi harus menampilkan alert jika form email kosong
+3. Aplikasi harus menampilkan alert jika form password kosong
+4. Aplikasi harus menampilkan pesan error bila email atau password salah
+5. Aplikasi harus menampilkan halaman HomePage jika email dan password benar
+
+
+    it("should display login page correctly", () => {
+      // Cek elemen judul halaman
+      cy.contains("Selamat Datang").should("be.visible");
+
+      // Cek input email
+      cy.get('input[placeholder="Email"]').should("be.visible");
+
+      // Cek input password
+      cy.get('input[placeholder="Password"]').should("be.visible");
+
+      // Cek tombol login
+      cy.get('button[type="submit"]').contains("Login").should("be.visible");
+
+      // Cek link ke register
+      cy.contains("Belum punya akun?").should("be.visible");
+      cy.get("button").contains("Register").should("be.visible");
+    });
+
+    it("should display alert when Email is empty", () => {
+      // Isi hanya password
+      cy.get('input[placeholder="Password"]').type("somepassword");
+
+      // Dengarkan alert
+      cy.on("window:alert", (text) => {
+        expect(text).to.equal("Mohon isi semua kolom!");
+      });
+
+      // Klik tombol login
+      cy.get('button[type="submit"]').click();
+    });
+
+    it("should display alert when Password is empty", () => {
+
+      // Isi hanya email
+      cy.get('input[placeholder="Email"]').type("user@example.com");
+
+      // Dengarkan alert
+      cy.on("window:alert", (text) => {
+        expect(text).to.equal("Mohon isi semua kolom!");
+      });
+
+      // Klik tombol login
+      cy.get('button[type="submit"]').click();
+    });
+    
+    it("should display alert when both Email and Password are empty", () => {
+
+      // Pastikan kedua field kosong (defaultnya memang kosong)
+      cy.get('input[placeholder="Email"]').should("have.value", "");
+      cy.get('input[placeholder="Password"]').should("have.value", "");
+
+      // Dengarkan alert
+      cy.on("window:alert", (text) => {
+        expect(text).to.equal("Mohon isi semua kolom!");
+      });
+
+      // Klik tombol login
+      cy.get('button[type="submit"]').click();
+    });
+    
+    it("should show error message when email/password is wrong", () => {
+      cy.intercept("POST", "/api/login", {
+        statusCode: 401,
+        body: {
+          error: "Unauthorized",
+        },
+        delay: 500,
+      }).as("loginRequest");
+
+      cy.get('input[type="email"]').type("wrong@example.com");
+      cy.get('input[type="password"]').type("wrongpassword245");
+
+      cy.get('button[type="submit"]').click();
+
+      cy.get('[data-testid="error-message"]')
+        .should("be.visible")
+        .and("contain.text", "email or password is wrong");
+    });

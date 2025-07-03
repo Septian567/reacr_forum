@@ -1,4 +1,3 @@
-// src/pages/LoginPage.jsx
 import React from 'react';
 import useLoginForm from '../hooks/useLoginForm';
 import LoginForm from '../components/auth/LoginForm';

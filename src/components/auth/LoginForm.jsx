@@ -38,7 +38,7 @@ const LoginForm = ({
 
       <PasswordContainer>
         <LoginInput
-          type={showPassword ? 'text' : 'password'}
+          type={showPassword ? "text" : "password"}
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -58,19 +58,19 @@ const LoginForm = ({
         )}
       </PasswordContainer>
 
-      {status === 'failed' && error && (
-        <ErrorText>
-          {error.includes('401') ? 'Email atau password salah' : error}
+      {status === "failed" && error && (
+        <ErrorText data-testid="error-message">
+          {error.includes("401") ? "Email atau password salah" : error}
         </ErrorText>
       )}
 
-      <LoginButton type="submit" disabled={status === 'loading'}>
-        {status === 'loading' ? 'Logging in...' : 'Login'}
+      <LoginButton type="submit" disabled={status === "loading"}>
+        {status === "loading" ? "Logging in..." : "Login"}
       </LoginButton>
 
       <RegisterContainer>
         <span>Belum punya akun?</span>
-        <RegisterButton type="button" onClick={() => navigate('/register')}>
+        <RegisterButton type="button" onClick={() => navigate("/register")}>
           Register
         </RegisterButton>
       </RegisterContainer>

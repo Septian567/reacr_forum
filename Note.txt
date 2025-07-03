@@ -17,3 +17,5 @@ import { describe, it, expect, vi } from 'vitest';
 import PostActions from './PostActions';
 import '@testing-library/jest-dom/vitest';
 
+npx cypress open
+npx cypress run

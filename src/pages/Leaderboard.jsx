@@ -72,4 +72,8 @@ const Leaderboard = () => {
   );
 };
 
+
+// komentar baru
+// Komentar dua
+
 export default Leaderboard;

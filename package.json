@@ -11,7 +11,8 @@
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix",
     "test": "vitest --no-watch",
-    "e2e": "cypress run"
+    "e2e": "cypress run",
+    "ci:test": "vitest --no-watch && start-server-and-test dev http-get://0.0.0.0:5173 e2e"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
@@ -47,6 +48,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc-1460d67c-20241003",
     "globals": "^15.10.0",
     "jsdom": "^26.1.0",
+    "start-server-and-test": "^2.0.12",
     "styled-components": "^6.1.19",
     "vite": "^4.5.14",
     "vitest": "^3.2.4"

@@ -72,4 +72,7 @@ const Leaderboard = () => {
   );
 };
 
+
+// komentar baru
+
 export default Leaderboard;

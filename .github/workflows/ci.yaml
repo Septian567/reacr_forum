@@ -3,7 +3,7 @@ name: Continuous Integration
 on:
   pull_request:
     branches:
-      - master
+      - v15_continues_Integration_githubActions
  
 jobs:
   automation-test-job:

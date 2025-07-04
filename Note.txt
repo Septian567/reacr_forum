@@ -19,3 +19,6 @@ import '@testing-library/jest-dom/vitest';
 
 npx cypress open
 npx cypress run
+
+
+deployment react di vercel bergantung pada folder dist di npm run build --> pastikan benar

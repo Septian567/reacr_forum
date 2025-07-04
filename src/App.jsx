@@ -7,7 +7,7 @@ import {
   useLocation,
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { store } from './states/index';
+import {store} from './states/index';
 import Menu from './pages/Menu';
 import Leaderboard from './pages/Leaderboard';
 import ThreadsPage from './pages/MainPage';

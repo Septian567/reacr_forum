@@ -22,3 +22,9 @@ npx cypress run
 
 
 deployment react di vercel bergantung pada folder dist di npm run build --> pastikan benar
+periksa kode index.html, vite.config.js, dan vercel.json
+atau perika devTool  -- console --> lihat pesan error
+untuk test
+
+npm run build
+npx serve -s dist
